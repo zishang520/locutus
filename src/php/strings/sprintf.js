@@ -1,16 +1,16 @@
-module.exports = function sprintf () {
-  //  discuss at: http://locutus.io/php/sprintf/
-  // original by: Ash Searle (http://hexmen.com/blog/)
-  // improved by: Michael White (http://getsprink.com)
+module.exports = function sprintf() {
+  //  discuss at: https://locutus.io/php/sprintf/
+  // original by: Ash Searle (https://hexmen.com/blog/)
+  // improved by: Michael White (https://getsprink.com)
   // improved by: Jack
-  // improved by: Kevin van Zonneveld (http://kvz.io)
-  // improved by: Kevin van Zonneveld (http://kvz.io)
-  // improved by: Kevin van Zonneveld (http://kvz.io)
+  // improved by: Kevin van Zonneveld (https://kvz.io)
+  // improved by: Kevin van Zonneveld (https://kvz.io)
+  // improved by: Kevin van Zonneveld (https://kvz.io)
   // improved by: Dj
   // improved by: Allidylls
   //    input by: Paulo Freitas
-  //    input by: Brett Zamir (http://brett-zamir.me)
-  // improved by: Rafał Kukawski (http://kukawski.pl)
+  //    input by: Brett Zamir (https://brett-zamir.me)
+  // improved by: Rafał Kukawski (https://kukawski.pl)
   //   example 1: sprintf("%01.2f", 123.1)
   //   returns 1: '123.10'
   //   example 2: sprintf("[%10s]", 'monkey')
@@ -30,31 +30,27 @@ module.exports = function sprintf () {
   //   example 9: sprintf('%% %2$d', 1, 2)
   //   returns 9: '% 2'
 
-  var regex = /%%|%(?:(\d+)\$)?((?:[-+#0 ]|'[\s\S])*)(\d+)?(?:\.(\d*))?([\s\S])/g
-  var args = arguments
-  var i = 0
-  var format = args[i++]
+  const regex = /%%|%(?:(\d+)\$)?((?:[-+#0 ]|'[\s\S])*)(\d+)?(?:\.(\d*))?([\s\S])/g
+  const args = arguments
+  let i = 0
+  const format = args[i++]
 
-  var _pad = function (str, len, chr, leftJustify) {
+  const _pad = function (str, len, chr, leftJustify) {
     if (!chr) {
       chr = ' '
     }
-    var padding = (str.length >= len) ? '' : new Array(1 + len - str.length >>> 0).join(chr)
+    const padding = str.length >= len ? '' : new Array((1 + len - str.length) >>> 0).join(chr)
     return leftJustify ? str + padding : padding + str
   }
 
-  var justify = function (value, prefix, leftJustify, minWidth, padChar) {
-    var diff = minWidth - value.length
+  const justify = function (value, prefix, leftJustify, minWidth, padChar) {
+    const diff = minWidth - value.length
     if (diff > 0) {
       // when padding with zeros
       // on the left side
       // keep sign (+ or -) in front
       if (!leftJustify && padChar === '0') {
-        value = [
-          value.slice(0, prefix.length),
-          _pad('', diff, '0', true),
-          value.slice(prefix.length)
-        ].join('')
+        value = [value.slice(0, prefix.length), _pad('', diff, '0', true), value.slice(prefix.length)].join('')
       } else {
         value = _pad(value, minWidth, padChar, leftJustify)
       }
@@ -62,15 +58,15 @@ module.exports = function sprintf () {
     return value
   }
 
-  var _formatBaseX = function (value, base, leftJustify, minWidth, precision, padChar) {
+  const _formatBaseX = function (value, base, leftJustify, minWidth, precision, padChar) {
     // Note: casts negative numbers to positive ones
-    var number = value >>> 0
+    const number = value >>> 0
     value = _pad(number.toString(base), precision || 0, '0', false)
     return justify(value, '', leftJustify, minWidth, padChar)
   }
 
   // _formatString()
-  var _formatString = function (value, leftJustify, minWidth, precision, customPadChar) {
+  const _formatString = function (value, leftJustify, minWidth, precision, customPadChar) {
     if (precision !== null && precision !== undefined) {
       value = value.slice(0, precision)
     }
@@ -78,18 +74,18 @@ module.exports = function sprintf () {
   }
 
   // doFormat()
-  var doFormat = function (substring, argIndex, modifiers, minWidth, precision, specifier) {
-    var number, prefix, method, textTransform, value
+  const doFormat = function (substring, argIndex, modifiers, minWidth, precision, specifier) {
+    let number, prefix, method, textTransform, value
 
     if (substring === '%%') {
       return '%'
     }
 
     // parse modifiers
-    var padChar = ' ' // pad with spaces by default
-    var leftJustify = false
-    var positiveNumberPrefix = ''
-    var j, l
+    let padChar = ' ' // pad with spaces by default
+    let leftJustify = false
+    let positiveNumberPrefix = ''
+    let j, l
 
     for (j = 0, l = modifiers.length; j < l; j++) {
       switch (modifiers.charAt(j)) {
@@ -123,7 +119,7 @@ module.exports = function sprintf () {
     }
 
     if (!precision) {
-      precision = (specifier === 'd') ? 0 : 'fFeE'.indexOf(specifier) > -1 ? 6 : undefined
+      precision = specifier === 'd' ? 0 : 'fFeE'.indexOf(specifier) > -1 ? 6 : undefined
     } else {
       precision = +precision
     }
@@ -152,15 +148,14 @@ module.exports = function sprintf () {
       case 'x':
         return _formatBaseX(value, 16, leftJustify, minWidth, precision, padChar)
       case 'X':
-        return _formatBaseX(value, 16, leftJustify, minWidth, precision, padChar)
-          .toUpperCase()
+        return _formatBaseX(value, 16, leftJustify, minWidth, precision, padChar).toUpperCase()
       case 'u':
         return _formatBaseX(value, 10, leftJustify, minWidth, precision, padChar)
       case 'i':
       case 'd':
         number = +value || 0
         // Plain Math.round doesn't just truncate
-        number = Math.round(number - number % 1)
+        number = Math.round(number - (number % 1))
         prefix = number < 0 ? '-' : positiveNumberPrefix
         value = prefix + _pad(String(Math.abs(number)), precision, '0', false)
 

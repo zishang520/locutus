@@ -1,23 +1,25 @@
-module.exports = function array_search (needle, haystack, argStrict) { // eslint-disable-line camelcase
-  //  discuss at: http://locutus.io/php/array_search/
-  // original by: Kevin van Zonneveld (http://kvz.io)
-  //    input by: Brett Zamir (http://brett-zamir.me)
-  // bugfixed by: Kevin van Zonneveld (http://kvz.io)
-  // bugfixed by: Reynier de la Rosa (http://scriptinside.blogspot.com.es/)
+module.exports = function array_search(needle, haystack, argStrict) {
+  //  discuss at: https://locutus.io/php/array_search/
+  // original by: Kevin van Zonneveld (https://kvz.io)
+  //    input by: Brett Zamir (https://brett-zamir.me)
+  // bugfixed by: Kevin van Zonneveld (https://kvz.io)
+  // bugfixed by: Reynier de la Rosa (https://scriptinside.blogspot.com.es/)
   //        test: skip-all
   //   example 1: array_search('zonneveld', {firstname: 'kevin', middle: 'van', surname: 'zonneveld'})
   //   returns 1: 'surname'
   //   example 2: array_search('3', {a: 3, b: 5, c: 7})
   //   returns 2: 'a'
 
-  var strict = !!argStrict
-  var key = ''
+  const strict = !!argStrict
+  let key = ''
 
   if (typeof needle === 'object' && needle.exec) {
     // Duck-type for RegExp
     if (!strict) {
       // Let's consider case sensitive searches as strict
-      var flags = 'i' + (needle.global ? 'g' : '') +
+      const flags =
+        'i' +
+        (needle.global ? 'g' : '') +
         (needle.multiline ? 'm' : '') +
         // sticky is FF only
         (needle.sticky ? 'y' : '')
@@ -35,7 +37,8 @@ module.exports = function array_search (needle, haystack, argStrict) { // eslint
 
   for (key in haystack) {
     if (haystack.hasOwnProperty(key)) {
-      if ((strict && haystack[key] === needle) || (!strict && haystack[key] == needle)) { // eslint-disable-line eqeqeq
+      // eslint-disable-next-line eqeqeq
+      if ((strict && haystack[key] === needle) || (!strict && haystack[key] == needle)) {
         return key
       }
     }

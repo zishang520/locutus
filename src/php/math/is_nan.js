@@ -1,5 +1,5 @@
-module.exports = function is_nan (val) { // eslint-disable-line camelcase
-  //  discuss at: http://locutus.io/php/is_nan/
+module.exports = function is_nan(val) {
+  //  discuss at: https://locutus.io/php/is_nan/
   // original by: Onno Marsman (https://twitter.com/onnomarsman)
   //    input by: Robin
   //   example 1: is_nan(NaN)
@@ -7,7 +7,7 @@ module.exports = function is_nan (val) { // eslint-disable-line camelcase
   //   example 2: is_nan(0)
   //   returns 2: false
 
-  var warningType = ''
+  let warningType = ''
 
   if (typeof val === 'number' && isNaN(val)) {
     return true
@@ -15,7 +15,7 @@ module.exports = function is_nan (val) { // eslint-disable-line camelcase
 
   // Some errors for maximum PHP compatibility
   if (typeof val === 'object') {
-    warningType = (Object.prototype.toString.call(val) === '[object Array]' ? 'array' : 'object')
+    warningType = Object.prototype.toString.call(val) === '[object Array]' ? 'array' : 'object'
   } else if (typeof val === 'string' && !val.match(/^[+-]?\d/)) {
     // simulate PHP's behaviour: '-9a' doesn't give a warning, but 'a9' does.
     warningType = 'string'

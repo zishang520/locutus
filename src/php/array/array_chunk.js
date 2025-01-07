@@ -1,7 +1,7 @@
-module.exports = function array_chunk (input, size, preserveKeys) { // eslint-disable-line camelcase
-  //  discuss at: http://locutus.io/php/array_chunk/
-  // original by: Carlos R. L. Rodrigues (http://www.jsfromhell.com)
-  // improved by: Brett Zamir (http://brett-zamir.me)
+module.exports = function array_chunk(input, size, preserveKeys) {
+  //  discuss at: https://locutus.io/php/array_chunk/
+  // original by: Carlos R. L. Rodrigues (https://www.jsfromhell.com)
+  // improved by: Brett Zamir (https://brett-zamir.me)
   //      note 1: Important note: Per the ECMAScript specification,
   //      note 1: objects may not always iterate in a predictable order
   //   example 1: array_chunk(['Kevin', 'van', 'Zonneveld'], 2)
@@ -13,12 +13,12 @@ module.exports = function array_chunk (input, size, preserveKeys) { // eslint-di
   //   example 4: array_chunk({1:'Kevin', 2:'van', 3:'Zonneveld'}, 2, true)
   //   returns 4: [{1: 'Kevin', 2: 'van'}, {3: 'Zonneveld'}]
 
-  var x
-  var p = ''
-  var i = 0
-  var c = -1
-  var l = input.length || 0
-  var n = []
+  let x
+  let p = ''
+  let i = 0
+  let c = -1
+  const l = input.length || 0
+  const n = []
 
   if (size < 1) {
     return null
@@ -27,16 +27,13 @@ module.exports = function array_chunk (input, size, preserveKeys) { // eslint-di
   if (Object.prototype.toString.call(input) === '[object Array]') {
     if (preserveKeys) {
       while (i < l) {
-        (x = i % size)
-          ? n[c][i] = input[i]
-          : n[++c] = {}; n[c][i] = input[i]
+        ;(x = i % size) ? (n[c][i] = input[i]) : (n[++c] = {})
+        n[c][i] = input[i]
         i++
       }
     } else {
       while (i < l) {
-        (x = i % size)
-          ? n[c][x] = input[i]
-          : n[++c] = [input[i]]
+        ;(x = i % size) ? (n[c][x] = input[i]) : (n[++c] = [input[i]])
         i++
       }
     }
@@ -44,18 +41,15 @@ module.exports = function array_chunk (input, size, preserveKeys) { // eslint-di
     if (preserveKeys) {
       for (p in input) {
         if (input.hasOwnProperty(p)) {
-          (x = i % size)
-            ? n[c][p] = input[p]
-            : n[++c] = {}; n[c][p] = input[p]
+          ;(x = i % size) ? (n[c][p] = input[p]) : (n[++c] = {})
+          n[c][p] = input[p]
           i++
         }
       }
     } else {
       for (p in input) {
         if (input.hasOwnProperty(p)) {
-          (x = i % size)
-            ? n[c][x] = input[p]
-            : n[++c] = [input[p]]
+          ;(x = i % size) ? (n[c][x] = input[p]) : (n[++c] = [input[p]])
           i++
         }
       }

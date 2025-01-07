@@ -1,7 +1,7 @@
-module.exports = function array_push (inputArr) { // eslint-disable-line camelcase
-  //  discuss at: http://locutus.io/php/array_push/
-  // original by: Kevin van Zonneveld (http://kvz.io)
-  // improved by: Brett Zamir (http://brett-zamir.me)
+module.exports = function array_push(inputArr) {
+  //  discuss at: https://locutus.io/php/array_push/
+  // original by: Kevin van Zonneveld (https://kvz.io)
+  // improved by: Brett Zamir (https://brett-zamir.me)
   //      note 1: Note also that IE retains information about property position even
   //      note 1: after being supposedly deleted, so if you delete properties and then
   //      note 1: add back properties with the same keys (including numeric) that had
@@ -10,14 +10,14 @@ module.exports = function array_push (inputArr) { // eslint-disable-line camelca
   //   example 1: array_push(['kevin','van'], 'zonneveld')
   //   returns 1: 3
 
-  var i = 0
-  var pr = ''
-  var argv = arguments
-  var argc = argv.length
-  var allDigits = /^\d$/
-  var size = 0
-  var highestIdx = 0
-  var len = 0
+  let i = 0
+  let pr = ''
+  const argv = arguments
+  const argc = argv.length
+  const allDigits = /^\d$/
+  let size = 0
+  let highestIdx = 0
+  let len = 0
 
   if (inputArr.hasOwnProperty('length')) {
     for (i = 1; i < argc; i++) {

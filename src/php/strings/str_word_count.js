@@ -1,11 +1,11 @@
-module.exports = function str_word_count (str, format, charlist) { // eslint-disable-line camelcase
-  //  discuss at: http://locutus.io/php/str_word_count/
+module.exports = function str_word_count(str, format, charlist) {
+  //  discuss at: https://locutus.io/php/str_word_count/
   // original by: Ole Vrijenhoek
-  // bugfixed by: Kevin van Zonneveld (http://kvz.io)
-  // bugfixed by: Brett Zamir (http://brett-zamir.me)
-  // bugfixed by: Brett Zamir (http://brett-zamir.me)
+  // bugfixed by: Kevin van Zonneveld (https://kvz.io)
+  // bugfixed by: Brett Zamir (https://brett-zamir.me)
+  // bugfixed by: Brett Zamir (https://brett-zamir.me)
   //    input by: Bug?
-  // improved by: Brett Zamir (http://brett-zamir.me)
+  // improved by: Brett Zamir (https://brett-zamir.me)
   //   example 1: str_word_count("Hello fri3nd, you're\r\n       looking          good today!", 1)
   //   returns 1: ['Hello', 'fri', 'nd', "you're", 'looking', 'good', 'today']
   //   example 2: str_word_count("Hello fri3nd, you're\r\n       looking          good today!", 2)
@@ -15,37 +15,37 @@ module.exports = function str_word_count (str, format, charlist) { // eslint-dis
   //   example 4: str_word_count('hey', 2)
   //   returns 4: {0: 'hey'}
 
-  var ctypeAlpha = require('../ctype/ctype_alpha')
-  var len = str.length
-  var cl = charlist && charlist.length
-  var chr = ''
-  var tmpStr = ''
-  var i = 0
-  var c = ''
-  var wArr = []
-  var wC = 0
-  var assoc = {}
-  var aC = 0
-  var reg = ''
-  var match = false
+  const ctypeAlpha = require('../ctype/ctype_alpha')
+  const len = str.length
+  const cl = charlist && charlist.length
+  let chr = ''
+  let tmpStr = ''
+  let i = 0
+  let c = ''
+  const wArr = []
+  let wC = 0
+  const assoc = {}
+  let aC = 0
+  let reg = ''
+  let match = false
 
-  var _pregQuote = function (str) {
+  const _pregQuote = function (str) {
     return (str + '').replace(/([\\.+*?[^\]$(){}=!<>|:])/g, '\\$1')
   }
-  var _getWholeChar = function (str, i) {
+  const _getWholeChar = function (str, i) {
     // Use for rare cases of non-BMP characters
-    var code = str.charCodeAt(i)
-    if (code < 0xD800 || code > 0xDFFF) {
+    const code = str.charCodeAt(i)
+    if (code < 0xd800 || code > 0xdfff) {
       return str.charAt(i)
     }
-    if (code >= 0xD800 && code <= 0xDBFF) {
+    if (code >= 0xd800 && code <= 0xdbff) {
       // High surrogate (could change last hex to 0xDB7F to treat high private surrogates as single
       // characters)
-      if (str.length <= (i + 1)) {
+      if (str.length <= i + 1) {
         throw new Error('High surrogate without following low surrogate')
       }
-      var next = str.charCodeAt(i + 1)
-      if (next < 0xDC00 || next > 0xDFFF) {
+      const next = str.charCodeAt(i + 1)
+      if (next < 0xdc00 || next > 0xdfff) {
         throw new Error('High surrogate without following low surrogate')
       }
       return str.charAt(i) + str.charAt(i + 1)
@@ -54,8 +54,8 @@ module.exports = function str_word_count (str, format, charlist) { // eslint-dis
     if (i === 0) {
       throw new Error('Low surrogate without preceding high surrogate')
     }
-    var prev = str.charCodeAt(i - 1)
-    if (prev < 0xD800 || prev > 0xDBFF) {
+    const prev = str.charCodeAt(i - 1)
+    if (prev < 0xd800 || prev > 0xdbff) {
       // (could change last hex to 0xDB7F to treat high private surrogates as single characters)
       throw new Error('Low surrogate without preceding high surrogate')
     }
@@ -83,9 +83,10 @@ module.exports = function str_word_count (str, format, charlist) { // eslint-dis
     // No hyphen at beginning or end unless allowed in charlist (or locale)
     // No apostrophe at beginning unless allowed in charlist (or locale)
     // @todo: Make this more readable
-    match = ctypeAlpha(c) ||
+    match =
+      ctypeAlpha(c) ||
       (reg && c.search(reg) !== -1) ||
-      ((i !== 0 && i !== len - 1) && c === '-') ||
+      (i !== 0 && i !== len - 1 && c === '-') ||
       (i !== 0 && c === "'")
     if (match) {
       if (tmpStr === '' && format === 2) {
@@ -93,7 +94,7 @@ module.exports = function str_word_count (str, format, charlist) { // eslint-dis
       }
       tmpStr = tmpStr + c
     }
-    if (i === len - 1 || !match && tmpStr !== '') {
+    if (i === len - 1 || (!match && tmpStr !== '')) {
       if (format !== 2) {
         wArr[wArr.length] = tmpStr
       } else {

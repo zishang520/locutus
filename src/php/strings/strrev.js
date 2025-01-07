@@ -1,8 +1,8 @@
-module.exports = function strrev (string) {
-  //       discuss at: http://locutus.io/php/strrev/
-  //      original by: Kevin van Zonneveld (http://kvz.io)
+module.exports = function strrev(string) {
+  //       discuss at: https://locutus.io/php/strrev/
+  //      original by: Kevin van Zonneveld (https://kvz.io)
   //      bugfixed by: Onno Marsman (https://twitter.com/onnomarsman)
-  // reimplemented by: Brett Zamir (http://brett-zamir.me)
+  // reimplemented by: Brett Zamir (https://brett-zamir.me)
   //        example 1: strrev('Kevin van Zonneveld')
   //        returns 1: 'dlevennoZ nav niveK'
   //        example 2: strrev('a\u0301haB')
@@ -17,11 +17,11 @@ module.exports = function strrev (string) {
   // out if you don't care about combining characters
   // Keep Unicode combining characters together with the character preceding
   // them and which they are modifying (as in PHP 6)
-  // See http://unicode.org/reports/tr44/#Property_Table (Me+Mn)
+  // See https://unicode.org/reports/tr44/#Property_Table (Me+Mn)
   // We also add the low surrogate range at the beginning here so it will be
   // maintained with its preceding high surrogate
 
-  var chars = [
+  const chars = [
     '\uDC00-\uDFFF',
     '\u0300-\u036F',
     '\u0483-\u0489',
@@ -202,10 +202,10 @@ module.exports = function strrev (string) {
     '\uAA4D',
     '\uFB1E',
     '\uFE00-\uFE0F',
-    '\uFE20-\uFE26'
+    '\uFE20-\uFE26',
   ]
 
-  var graphemeExtend = new RegExp('(.)([' + chars.join('') + ']+)', 'g')
+  const graphemeExtend = new RegExp('(.)([' + chars.join('') + ']+)', 'g')
 
   // Temporarily reverse
   string = string.replace(graphemeExtend, '$2$1')

@@ -1,10 +1,10 @@
-module.exports = function intval (mixedVar, base) {
-  //  discuss at: http://locutus.io/php/intval/
-  // original by: Kevin van Zonneveld (http://kvz.io)
+module.exports = function intval(mixedVar, base) {
+  //  discuss at: https://locutus.io/php/intval/
+  // original by: Kevin van Zonneveld (https://kvz.io)
   // improved by: stensi
-  // bugfixed by: Kevin van Zonneveld (http://kvz.io)
-  // bugfixed by: Brett Zamir (http://brett-zamir.me)
-  // bugfixed by: Rafał Kukawski (http://blog.kukawski.pl)
+  // bugfixed by: Kevin van Zonneveld (https://kvz.io)
+  // bugfixed by: Brett Zamir (https://brett-zamir.me)
+  // bugfixed by: Rafał Kukawski (https://blog.kukawski.pl)
   //    input by: Matteo
   //   example 1: intval('Kevin van Zonneveld')
   //   returns 1: 0
@@ -23,9 +23,9 @@ module.exports = function intval (mixedVar, base) {
   //   example 8: intval('010', 0)
   //   returns 8: 8
 
-  var tmp, match
+  let tmp, match
 
-  var type = typeof mixedVar
+  const type = typeof mixedVar
 
   if (type === 'boolean') {
     return +mixedVar
@@ -35,7 +35,7 @@ module.exports = function intval (mixedVar, base) {
       base = match ? (match[1] ? 16 : 8) : 10
     }
     tmp = parseInt(mixedVar, base || 10)
-    return (isNaN(tmp) || !isFinite(tmp)) ? 0 : tmp
+    return isNaN(tmp) || !isFinite(tmp) ? 0 : tmp
   } else if (type === 'number' && isFinite(mixedVar)) {
     return mixedVar < 0 ? Math.ceil(mixedVar) : Math.floor(mixedVar)
   } else {

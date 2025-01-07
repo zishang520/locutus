@@ -1,6 +1,6 @@
-module.exports = function strtok (str, tokens) {
-  //  discuss at: http://locutus.io/php/strtok/
-  // original by: Brett Zamir (http://brett-zamir.me)
+module.exports = function strtok(str, tokens) {
+  //  discuss at: https://locutus.io/php/strtok/
+  // original by: Brett Zamir (https://brett-zamir.me)
   //      note 1: Use tab and newline as tokenizing characters as well
   //   example 1: var $string = "\t\t\t\nThis is\tan example\nstring\n"
   //   example 1: var $tok = strtok($string, " \n\t")
@@ -9,9 +9,9 @@ module.exports = function strtok (str, tokens) {
   //   example 1: var $result = $b
   //   returns 1: "Word=This\nWord=is\nWord=an\nWord=example\nWord=string\n"
 
-  var $global = (typeof window !== 'undefined' ? window : global)
+  const $global = typeof window !== 'undefined' ? window : global
   $global.$locutus = $global.$locutus || {}
-  var $locutus = $global.$locutus
+  const $locutus = $global.$locutus
   $locutus.php = $locutus.php || {}
 
   if (tokens === undefined) {

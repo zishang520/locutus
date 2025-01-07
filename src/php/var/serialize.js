@@ -1,19 +1,19 @@
-module.exports = function serialize (mixedValue) {
-  //  discuss at: http://locutus.io/php/serialize/
+module.exports = function serialize(mixedValue) {
+  //  discuss at: https://locutus.io/php/serialize/
   // original by: Arpad Ray (mailto:arpad@php.net)
   // improved by: Dino
-  // improved by: Le Torbi (http://www.letorbi.de/)
-  // improved by: Kevin van Zonneveld (http://kvz.io/)
+  // improved by: Le Torbi (https://www.letorbi.de/)
+  // improved by: Kevin van Zonneveld (https://kvz.io/)
   // bugfixed by: Andrej Pavlovic
   // bugfixed by: Garagoth
-  // bugfixed by: Russell Walker (http://www.nbill.co.uk/)
-  // bugfixed by: Jamie Beck (http://www.terabit.ca/)
-  // bugfixed by: Kevin van Zonneveld (http://kvz.io/)
-  // bugfixed by: Ben (http://benblume.co.uk/)
-  // bugfixed by: Codestar (http://codestarlive.com/)
+  // bugfixed by: Russell Walker (https://www.nbill.co.uk/)
+  // bugfixed by: Jamie Beck (https://www.terabit.ca/)
+  // bugfixed by: Kevin van Zonneveld (https://kvz.io/)
+  // bugfixed by: Ben (https://benblume.co.uk/)
+  // bugfixed by: Codestar (https://codestarlive.com/)
   // bugfixed by: idjem (https://github.com/idjem)
-  //    input by: DtTvB (http://dt.in.th/2008-09-16.string-length-in-bytes.html)
-  //    input by: Martin (http://www.erlenwiese.de/)
+  //    input by: DtTvB (https://dt.in.th/2008-09-16.string-length-in-bytes.html)
+  //    input by: Martin (https://www.erlenwiese.de/)
   //      note 1: We feel the main purpose of this function should be to ease
   //      note 1: the transport of data between php & js
   //      note 1: Aiming for PHP-compatibility, we have to translate objects to arrays
@@ -24,21 +24,21 @@ module.exports = function serialize (mixedValue) {
   //   example 3: serialize( {'ü': 'ü', '四': '四', '𠜎': '𠜎'})
   //   returns 3: 'a:3:{s:2:"ü";s:2:"ü";s:3:"四";s:3:"四";s:4:"𠜎";s:4:"𠜎";}'
 
-  var val, key, okey
-  var ktype = ''
-  var vals = ''
-  var count = 0
+  let val, key, okey
+  let ktype = ''
+  let vals = ''
+  let count = 0
 
-  var _utf8Size = function (str) {
+  const _utf8Size = function (str) {
     return ~-encodeURI(str).split(/%..|./).length
   }
 
-  var _getType = function (inp) {
-    var match
-    var key
-    var cons
-    var types
-    var type = typeof inp
+  const _getType = function (inp) {
+    let match
+    let key
+    let cons
+    let types
+    let type = typeof inp
 
     if (type === 'object' && !inp) {
       return 'null'
@@ -64,7 +64,7 @@ module.exports = function serialize (mixedValue) {
     return type
   }
 
-  var type = _getType(mixedValue)
+  const type = _getType(mixedValue)
 
   switch (type) {
     case 'function':
@@ -100,7 +100,7 @@ module.exports = function serialize (mixedValue) {
             continue
           }
 
-          okey = (key.match(/^[0-9]+$/) ? parseInt(key, 10) : key)
+          okey = key.match(/^[0-9]+$/) ? parseInt(key, 10) : key
           vals += serialize(okey) + serialize(mixedValue[key])
           count++
         }

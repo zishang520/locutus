@@ -1,10 +1,10 @@
-module.exports = function trim (str, charlist) {
-  //  discuss at: http://locutus.io/php/trim/
-  // original by: Kevin van Zonneveld (http://kvz.io)
-  // improved by: mdsjack (http://www.mdsjack.bo.it)
-  // improved by: Alexander Ermolaev (http://snippets.dzone.com/user/AlexanderErmolaev)
-  // improved by: Kevin van Zonneveld (http://kvz.io)
-  // improved by: Steven Levithan (http://blog.stevenlevithan.com)
+module.exports = function trim(str, charlist) {
+  //  discuss at: https://locutus.io/php/trim/
+  // original by: Kevin van Zonneveld (https://kvz.io)
+  // improved by: mdsjack (https://www.mdsjack.bo.it)
+  // improved by: Alexander Ermolaev (https://snippets.dzone.com/user/AlexanderErmolaev)
+  // improved by: Kevin van Zonneveld (https://kvz.io)
+  // improved by: Steven Levithan (https://blog.stevenlevithan.com)
   // improved by: Jack
   //    input by: Erkekjetter
   //    input by: DxGx
@@ -16,7 +16,7 @@ module.exports = function trim (str, charlist) {
   //   example 3: trim(16, 1)
   //   returns 3: '6'
 
-  var whitespace = [
+  let whitespace = [
     ' ',
     '\n',
     '\r',
@@ -38,10 +38,10 @@ module.exports = function trim (str, charlist) {
     '\u200b',
     '\u2028',
     '\u2029',
-    '\u3000'
+    '\u3000',
   ].join('')
-  var l = 0
-  var i = 0
+  let l = 0
+  let i = 0
   str += ''
 
   if (charlist) {

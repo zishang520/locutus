@@ -1,14 +1,14 @@
-module.exports = function strtr (str, trFrom, trTo) {
-  //  discuss at: http://locutus.io/php/strtr/
-  // original by: Brett Zamir (http://brett-zamir.me)
+module.exports = function strtr(str, trFrom, trTo) {
+  //  discuss at: https://locutus.io/php/strtr/
+  // original by: Brett Zamir (https://brett-zamir.me)
   //    input by: uestla
   //    input by: Alan C
   //    input by: Taras Bogach
   //    input by: jpfle
-  // bugfixed by: Kevin van Zonneveld (http://kvz.io)
-  // bugfixed by: Kevin van Zonneveld (http://kvz.io)
-  // bugfixed by: Brett Zamir (http://brett-zamir.me)
-  // bugfixed by: Brett Zamir (http://brett-zamir.me)
+  // bugfixed by: Kevin van Zonneveld (https://kvz.io)
+  // bugfixed by: Kevin van Zonneveld (https://kvz.io)
+  // bugfixed by: Brett Zamir (https://brett-zamir.me)
+  // bugfixed by: Brett Zamir (https://brett-zamir.me)
   //   example 1: var $trans = {'hello' : 'hi', 'hi' : 'hello'}
   //   example 1: strtr('hi all, I said hello', $trans)
   //   returns 1: 'hello all, I said hi'
@@ -23,22 +23,22 @@ module.exports = function strtr (str, trFrom, trTo) {
   //   example 6: strtr('aa', {'a':1,'aa':2})
   //   returns 6: '2'
 
-  var krsort = require('../array/krsort')
-  var iniSet = require('../info/ini_set')
+  const krsort = require('../array/krsort')
+  const iniSet = require('../info/ini_set')
 
-  var fr = ''
-  var i = 0
-  var j = 0
-  var lenStr = 0
-  var lenFrom = 0
-  var sortByReference = false
-  var fromTypeStr = ''
-  var toTypeStr = ''
-  var istr = ''
-  var tmpFrom = []
-  var tmpTo = []
-  var ret = ''
-  var match = false
+  let fr = ''
+  let i = 0
+  let j = 0
+  let lenStr = 0
+  let lenFrom = 0
+  let sortByReference = false
+  let fromTypeStr = ''
+  let toTypeStr = ''
+  let istr = ''
+  const tmpFrom = []
+  const tmpTo = []
+  let ret = ''
+  let match = false
 
   // Received replace_pairs?
   // Convert to normal trFrom->trTo chars
@@ -81,7 +81,7 @@ module.exports = function strtr (str, trFrom, trTo) {
         if (str.substr(i, trFrom[j].length) === trFrom[j]) {
           match = true
           // Fast forward
-          i = (i + trFrom[j].length) - 1
+          i = i + trFrom[j].length - 1
           break
         }
       }

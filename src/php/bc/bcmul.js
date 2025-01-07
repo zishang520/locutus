@@ -1,5 +1,5 @@
-module.exports = function bcmul (leftOperand, rightOperand, scale) {
-  //  discuss at: http://locutus.io/php/bcmul/
+module.exports = function bcmul(leftOperand, rightOperand, scale) {
+  //  discuss at: https://locutus.io/php/bcmul/
   // original by: lmeyrick (https://sourceforge.net/projects/bcmath-js/)
   //   example 1: bcmul('1', '2')
   //   returns 1: '2'
@@ -10,15 +10,15 @@ module.exports = function bcmul (leftOperand, rightOperand, scale) {
   //   example 4: bcmul('2.5', '1.5', 2)
   //   returns 4: '3.75'
 
-  var _bc = require('../_helpers/_bc')
-  var libbcmath = _bc()
+  const _bc = require('../_helpers/_bc')
+  const libbcmath = _bc()
 
-  var first, second, result
+  let first, second, result
 
   if (typeof scale === 'undefined') {
     scale = libbcmath.scale
   }
-  scale = ((scale < 0) ? 0 : scale)
+  scale = scale < 0 ? 0 : scale
 
   // create objects
   first = libbcmath.bc_init_num()

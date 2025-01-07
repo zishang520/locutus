@@ -1,16 +1,16 @@
-module.exports = function asort (inputArr, sortFlags) {
-  //  discuss at: http://locutus.io/php/asort/
-  // original by: Brett Zamir (http://brett-zamir.me)
-  // improved by: Brett Zamir (http://brett-zamir.me)
-  // improved by: Brett Zamir (http://brett-zamir.me)
+module.exports = function asort(inputArr, sortFlags) {
+  //  discuss at: https://locutus.io/php/asort/
+  // original by: Brett Zamir (https://brett-zamir.me)
+  // improved by: Brett Zamir (https://brett-zamir.me)
+  // improved by: Brett Zamir (https://brett-zamir.me)
   // improved by: Theriault (https://github.com/Theriault)
   //    input by: paulo kuong
-  // bugfixed by: Adam Wallner (http://web2.bitbaro.hu/)
+  // bugfixed by: Adam Wallner (https://web2.bitbaro.hu/)
   //      note 1: SORT_STRING (as well as natsort and natcasesort) might also be
   //      note 1: integrated into all of these functions by adapting the code at
-  //      note 1: http://sourcefrog.net/projects/natsort/natcompare.js
+  //      note 1: https://sourcefrog.net/projects/natsort/natcompare.js
   //      note 1: The examples are correct, this is a new way
-  //      note 1: Credits to: http://javascript.internet.com/math-related/bubble-sort.html
+  //      note 1: Credits to: https://javascript.internet.com/math-related/bubble-sort.html
   //      note 1: This function deviates from PHP in returning a copy of the array instead
   //      note 1: of acting by reference and returning true; this was necessary because
   //      note 1: IE does not allow deleting and re-adding of properties without caching
@@ -34,20 +34,20 @@ module.exports = function asort (inputArr, sortFlags) {
   //   example 2: var $result = $data
   //   returns 2: {c: 'apple', b: 'banana', d: 'lemon', a: 'orange'}
 
-  var strnatcmp = require('../strings/strnatcmp')
-  var i18nlgd = require('../i18n/i18n_loc_get_default')
+  const strnatcmp = require('../strings/strnatcmp')
+  const i18nlgd = require('../i18n/i18n_loc_get_default')
 
-  var valArr = []
-  var valArrLen = 0
-  var k
-  var i
-  var sorter
-  var sortByReference = false
-  var populateArr = {}
+  const valArr = []
+  let valArrLen = 0
+  let k
+  let i
+  let sorter
+  let sortByReference = false
+  let populateArr = {}
 
-  var $global = (typeof window !== 'undefined' ? window : global)
+  const $global = typeof window !== 'undefined' ? window : global
   $global.$locutus = $global.$locutus || {}
-  var $locutus = $global.$locutus
+  const $locutus = $global.$locutus
   $locutus.php = $locutus.php || {}
   $locutus.php.locales = $locutus.php.locales || {}
 
@@ -67,7 +67,7 @@ module.exports = function asort (inputArr, sortFlags) {
     case 'SORT_NUMERIC':
       // compare items numerically
       sorter = function (a, b) {
-        return (a - b)
+        return a - b
       }
       break
     case 'SORT_REGULAR':
@@ -75,10 +75,10 @@ module.exports = function asort (inputArr, sortFlags) {
       break
     default:
       sorter = function (a, b) {
-        var aFloat = parseFloat(a)
-        var bFloat = parseFloat(b)
-        var aNumeric = aFloat + '' === a
-        var bNumeric = bFloat + '' === b
+        const aFloat = parseFloat(a)
+        const bFloat = parseFloat(b)
+        const aNumeric = aFloat + '' === a
+        const bNumeric = bFloat + '' === b
         if (aNumeric && bNumeric) {
           return aFloat > bFloat ? 1 : aFloat < bFloat ? -1 : 0
         } else if (aNumeric && !bNumeric) {
@@ -91,7 +91,8 @@ module.exports = function asort (inputArr, sortFlags) {
       break
   }
 
-  var iniVal = (typeof require !== 'undefined' ? require('../info/ini_get')('locutus.sortByReference') : undefined) || 'on'
+  const iniVal =
+    (typeof require !== 'undefined' ? require('../info/ini_get')('locutus.sortByReference') : undefined) || 'on'
   sortByReference = iniVal === 'on'
   populateArr = sortByReference ? inputArr : populateArr
 

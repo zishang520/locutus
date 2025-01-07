@@ -1,7 +1,7 @@
-module.exports = function json_decode (strJson) { // eslint-disable-line camelcase
-  //       discuss at: http://phpjs.org/functions/json_decode/
-  //      original by: Public Domain (http://www.json.org/json2.js)
-  // reimplemented by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+module.exports = function json_decode(strJson) {
+  //       discuss at: https://phpjs.org/functions/json_decode/
+  //      original by: Public Domain (https://www.json.org/json2.js)
+  // reimplemented by: Kevin van Zonneveld (https://kevin.vanzonneveld.net)
   //      improved by: T.J. Leahy
   //      improved by: Michael White
   //           note 1: If node or the browser does not offer JSON.parse,
@@ -11,19 +11,19 @@ module.exports = function json_decode (strJson) { // eslint-disable-line camelca
   //        returns 1: [1]
 
   /*
-    http://www.JSON.org/json2.js
+    https://www.JSON.org/json2.js
     2008-11-19
     Public Domain.
     NO WARRANTY EXPRESSED OR IMPLIED. USE AT YOUR OWN RISK.
-    See http://www.JSON.org/js.html
+    See https://www.JSON.org/js.html
   */
 
-  var $global = (typeof window !== 'undefined' ? window : global)
+  const $global = typeof window !== 'undefined' ? window : global
   $global.$locutus = $global.$locutus || {}
-  var $locutus = $global.$locutus
+  const $locutus = $global.$locutus
   $locutus.php = $locutus.php || {}
 
-  var json = $global.JSON
+  const json = $global.JSON
   if (typeof json === 'object' && typeof json.parse === 'function') {
     try {
       return json.parse(strJson)
@@ -38,7 +38,7 @@ module.exports = function json_decode (strJson) { // eslint-disable-line camelca
     }
   }
 
-  var chars = [
+  const chars = [
     '\u0000',
     '\u00ad',
     '\u0600-\u0604',
@@ -49,11 +49,11 @@ module.exports = function json_decode (strJson) { // eslint-disable-line camelca
     '\u2028-\u202f',
     '\u2060-\u206f',
     '\ufeff',
-    '\ufff0-\uffff'
+    '\ufff0-\uffff',
   ].join('')
-  var cx = new RegExp('[' + chars + ']', 'g')
-  var j
-  var text = strJson
+  const cx = new RegExp('[' + chars + ']', 'g')
+  let j
+  let text = strJson
 
   // Parsing happens in four stages. In the first stage, we replace certain
   // Unicode characters with escape sequences. JavaScript handles many characters
@@ -61,9 +61,7 @@ module.exports = function json_decode (strJson) { // eslint-disable-line camelca
   cx.lastIndex = 0
   if (cx.test(text)) {
     text = text.replace(cx, function (a) {
-      return '\\u' + ('0000' + a.charCodeAt(0)
-        .toString(16))
-        .slice(-4)
+      return '\\u' + ('0000' + a.charCodeAt(0).toString(16)).slice(-4)
     })
   }
 
@@ -79,10 +77,12 @@ module.exports = function json_decode (strJson) { // eslint-disable-line camelca
   // we look to see that the remaining characters are only whitespace or ']' or
   // ',' or ':' or '{' or '}'. If that is so, then the text is safe for eval.
 
-  var m = (/^[\],:{}\s]*$/)
-    .test(text.replace(/\\(?:["\\/bfnrt]|u[0-9a-fA-F]{4})/g, '@')
-    .replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?/g, ']')
-    .replace(/(?:^|:|,)(?:\s*\[)+/g, ''))
+  const m = /^[\],:{}\s]*$/.test(
+    text
+      .replace(/\\(?:["\\/bfnrt]|u[0-9a-fA-F]{4})/g, '@')
+      .replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?/g, ']')
+      .replace(/(?:^|:|,)(?:\s*\[)+/g, ''),
+  )
 
   if (m) {
     // In the third stage we use the eval function to compile the text into a

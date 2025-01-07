@@ -1,26 +1,26 @@
-module.exports = function array_map (callback) { // eslint-disable-line camelcase
-  //  discuss at: http://locutus.io/php/array_map/
-  // original by: Andrea Giammarchi (http://webreflection.blogspot.com)
-  // improved by: Kevin van Zonneveld (http://kvz.io)
-  // improved by: Brett Zamir (http://brett-zamir.me)
+module.exports = function array_map(callback) {
+  //  discuss at: https://locutus.io/php/array_map/
+  // original by: Andrea Giammarchi (https://webreflection.blogspot.com)
+  // improved by: Kevin van Zonneveld (https://kvz.io)
+  // improved by: Brett Zamir (https://brett-zamir.me)
   //    input by: thekid
   //      note 1: If the callback is a string (or object, if an array is supplied),
   //      note 1: it can only work if the function name is in the global context
   //   example 1: array_map( function (a){return (a * a * a)}, [1, 2, 3, 4, 5] )
   //   returns 1: [ 1, 8, 27, 64, 125 ]
 
-  var argc = arguments.length
-  var argv = arguments
-  var obj = null
-  var cb = callback
-  var j = argv[1].length
-  var i = 0
-  var k = 1
-  var m = 0
-  var tmp = []
-  var tmpArr = []
+  const argc = arguments.length
+  const argv = arguments
+  let obj = null
+  let cb = callback
+  const j = argv[1].length
+  let i = 0
+  let k = 1
+  let m = 0
+  let tmp = []
+  const tmpArr = []
 
-  var $global = (typeof window !== 'undefined' ? window : global)
+  const $global = typeof window !== 'undefined' ? window : global
 
   while (i < j) {
     while (k < argc) {

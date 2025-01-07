@@ -1,6 +1,6 @@
-module.exports = function xdiff_string_patch (originalStr, patch, flags, errorObj) { // eslint-disable-line camelcase
-  //  discuss at: http://locutus.io/php/xdiff_string_patch/
-  // original by: Brett Zamir (http://brett-zamir.me)
+module.exports = function xdiff_string_patch(originalStr, patch, flags, errorObj) {
+  //  discuss at: https://locutus.io/php/xdiff_string_patch/
+  // original by: Brett Zamir (https://brett-zamir.me)
   // improved by: Steven Levithan (stevenlevithan.com)
   //      note 1: The XDIFF_PATCH_IGNORESPACE flag and the error argument are not
   //      note 1: currently supported.
@@ -14,40 +14,40 @@ module.exports = function xdiff_string_patch (originalStr, patch, flags, errorOb
   // Adapted from XRegExp 1.5.0
   // (c) 2007-2010 Steven Levithan
   // MIT License
-  // <http://xregexp.com>
+  // <https://xregexp.com>
 
-  var _getNativeFlags = function (regex) {
+  const _getNativeFlags = function (regex) {
     // Proposed for ES4; included in AS3
     return [
-      (regex.global ? 'g' : ''),
-      (regex.ignoreCase ? 'i' : ''),
-      (regex.multiline ? 'm' : ''),
-      (regex.extended ? 'x' : ''),
-      (regex.sticky ? 'y' : '')
+      regex.global ? 'g' : '',
+      regex.ignoreCase ? 'i' : '',
+      regex.multiline ? 'm' : '',
+      regex.extended ? 'x' : '',
+      regex.sticky ? 'y' : '',
     ].join('')
   }
 
-  var _cbSplit = function (string, sep) {
+  const _cbSplit = function (string, sep) {
     // If separator `s` is not a regex, use the native `split`
     if (!(sep instanceof RegExp)) {
       // Had problems to get it to work here using prototype test
       return String.prototype.split.apply(string, arguments)
     }
-    var str = String(string)
-    var output = []
-    var lastLastIndex = 0
-    var match
-    var lastLength
-    var limit = Infinity
-    var x = sep._xregexp
+    const str = String(string)
+    const output = []
+    let lastLastIndex = 0
+    let match
+    let lastLength
+    const limit = Infinity
+    const x = sep._xregexp
     // This is required if not `s.global`, and it avoids needing to set `s.lastIndex` to zero
     // and restore it to its original value when we're done using the regex
     // Brett paring down
-    var s = new RegExp(sep.source, _getNativeFlags(sep) + 'g')
+    const s = new RegExp(sep.source, _getNativeFlags(sep) + 'g')
     if (x) {
       s._xregexp = {
         source: x.source,
-        captureNames: x.captureNames ? x.captureNames.slice(0) : null
+        captureNames: x.captureNames ? x.captureNames.slice(0) : null,
       }
     }
 
@@ -84,24 +84,24 @@ module.exports = function xdiff_string_patch (originalStr, patch, flags, errorOb
     return output.length > limit ? output.slice(0, limit) : output
   }
 
-  var i = 0
-  var ll = 0
-  var ranges = []
-  var lastLinePos = 0
-  var firstChar = ''
-  var rangeExp = /^@@\s+-(\d+),(\d+)\s+\+(\d+),(\d+)\s+@@$/
-  var lineBreaks = /\r?\n/
-  var lines = _cbSplit(patch.replace(/(\r?\n)+$/, ''), lineBreaks)
-  var origLines = _cbSplit(originalStr, lineBreaks)
-  var newStrArr = []
-  var linePos = 0
-  var errors = ''
-  var optTemp = 0 // Both string & integer (constant) input is allowed
-  var OPTS = {
+  let i = 0
+  let ll = 0
+  let ranges = []
+  let lastLinePos = 0
+  let firstChar = ''
+  const rangeExp = /^@@\s+-(\d+),(\d+)\s+\+(\d+),(\d+)\s+@@$/
+  const lineBreaks = /\r?\n/
+  const lines = _cbSplit(patch.replace(/(\r?\n)+$/, ''), lineBreaks)
+  const origLines = _cbSplit(originalStr, lineBreaks)
+  const newStrArr = []
+  let linePos = 0
+  const errors = ''
+  let optTemp = 0 // Both string & integer (constant) input is allowed
+  const OPTS = {
     // Unsure of actual PHP values, so better to rely on string
-    'XDIFF_PATCH_NORMAL': 1,
-    'XDIFF_PATCH_REVERSE': 2,
-    'XDIFF_PATCH_IGNORESPACE': 4
+    XDIFF_PATCH_NORMAL: 1,
+    XDIFF_PATCH_REVERSE: 2,
+    XDIFF_PATCH_IGNORESPACE: 4,
   }
 
   // Input defaulting & sanitation
@@ -133,11 +133,11 @@ module.exports = function xdiff_string_patch (originalStr, patch, flags, errorOb
         while (lastLinePos < linePos) {
           newStrArr[newStrArr.length] = origLines[lastLinePos++]
         }
-        while (lines[++i] && (rangeExp.exec(lines[i])) === null) {
+        while (lines[++i] && rangeExp.exec(lines[i]) === null) {
           firstChar = lines[i].charAt(0)
           switch (firstChar) {
             case '-':
-            // Skip including that line
+              // Skip including that line
               ++linePos
               break
             case '+':
@@ -147,7 +147,7 @@ module.exports = function xdiff_string_patch (originalStr, patch, flags, errorOb
               newStrArr[newStrArr.length] = origLines[linePos++]
               break
             default:
-            // Reconcile with returning errrors arg?
+              // Reconcile with returning errrors arg?
               throw new Error('Unrecognized initial character in unidiff line')
           }
         }
@@ -169,21 +169,21 @@ module.exports = function xdiff_string_patch (originalStr, patch, flags, errorOb
         while (lastLinePos < linePos) {
           newStrArr[newStrArr.length] = origLines[lastLinePos++]
         }
-        while (lines[++i] && (rangeExp.exec(lines[i])) === null) {
+        while (lines[++i] && rangeExp.exec(lines[i]) === null) {
           firstChar = lines[i].charAt(0)
           switch (firstChar) {
             case '-':
               newStrArr[newStrArr.length] = lines[i].slice(1)
               break
             case '+':
-            // Skip including that line
+              // Skip including that line
               ++linePos
               break
             case ' ':
               newStrArr[newStrArr.length] = origLines[linePos++]
               break
             default:
-            // Reconcile with returning errrors arg?
+              // Reconcile with returning errrors arg?
               throw new Error('Unrecognized initial character in unidiff line')
           }
         }

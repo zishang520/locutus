@@ -1,6 +1,6 @@
-module.exports = function strcspn (str, mask, start, length) {
-  //  discuss at: http://locutus.io/php/strcspn/
-  // original by: Brett Zamir (http://brett-zamir.me)
+module.exports = function strcspn(str, mask, start, length) {
+  //  discuss at: https://locutus.io/php/strcspn/
+  // original by: Brett Zamir (https://brett-zamir.me)
   //  revised by: Theriault
   //   example 1: strcspn('abcdefg123', '1234567890')
   //   returns 1: 7
@@ -12,7 +12,7 @@ module.exports = function strcspn (str, mask, start, length) {
   //   returns 4: 1
 
   start = start || 0
-  length = typeof length === 'undefined' ? str.length : (length || 0)
+  length = typeof length === 'undefined' ? str.length : length || 0
   if (start < 0) start = str.length + start
   if (length < 0) length = str.length - start + length
   if (start < 0 || start >= str.length || length <= 0 || e >= str.length) return 0

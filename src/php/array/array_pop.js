@@ -1,11 +1,11 @@
-module.exports = function array_pop (inputArr) { // eslint-disable-line camelcase
-  //  discuss at: http://locutus.io/php/array_pop/
-  // original by: Kevin van Zonneveld (http://kvz.io)
-  // improved by: Kevin van Zonneveld (http://kvz.io)
-  //    input by: Brett Zamir (http://brett-zamir.me)
+module.exports = function array_pop(inputArr) {
+  //  discuss at: https://locutus.io/php/array_pop/
+  // original by: Kevin van Zonneveld (https://kvz.io)
+  // improved by: Kevin van Zonneveld (https://kvz.io)
+  //    input by: Brett Zamir (https://brett-zamir.me)
   //    input by: Theriault (https://github.com/Theriault)
-  // bugfixed by: Kevin van Zonneveld (http://kvz.io)
-  // bugfixed by: Brett Zamir (http://brett-zamir.me)
+  // bugfixed by: Kevin van Zonneveld (https://kvz.io)
+  // bugfixed by: Brett Zamir (https://brett-zamir.me)
   //      note 1: While IE (and other browsers) support iterating an object's
   //      note 1: own properties in order, if one attempts to add back properties
   //      note 1: in IE, they may end up in their former position due to their position
@@ -19,8 +19,8 @@ module.exports = function array_pop (inputArr) { // eslint-disable-line camelcas
   //   example 2: var $result = $data
   //   returns 2: {firstName: 'Kevin'}
 
-  var key = ''
-  var lastKey = ''
+  let key = ''
+  let lastKey = ''
 
   if (inputArr.hasOwnProperty('length')) {
     // Indexed
@@ -37,8 +37,8 @@ module.exports = function array_pop (inputArr) { // eslint-disable-line camelcas
       }
     }
     if (lastKey) {
-      var tmp = inputArr[lastKey]
-      delete (inputArr[lastKey])
+      const tmp = inputArr[lastKey]
+      delete inputArr[lastKey]
       return tmp
     } else {
       return null

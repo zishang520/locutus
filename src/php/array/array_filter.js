@@ -1,8 +1,8 @@
-module.exports = function array_filter (arr, func) { // eslint-disable-line camelcase
-  //  discuss at: http://locutus.io/php/array_filter/
-  // original by: Brett Zamir (http://brett-zamir.me)
+module.exports = function array_filter(arr, func) {
+  //  discuss at: https://locutus.io/php/array_filter/
+  // original by: Brett Zamir (https://brett-zamir.me)
   //    input by: max4ever
-  // improved by: Brett Zamir (http://brett-zamir.me)
+  // improved by: Brett Zamir (https://brett-zamir.me)
   //      note 1: Takes a function as an argument, not a function's name
   //   example 1: var odd = function (num) {return (num & 1);}
   //   example 1: array_filter({"a": 1, "b": 2, "c": 3, "d": 4, "e": 5}, odd)
@@ -13,12 +13,14 @@ module.exports = function array_filter (arr, func) { // eslint-disable-line came
   //   example 3: array_filter({"a": 1, "b": false, "c": -1, "d": 0, "e": null, "f":'', "g":undefined})
   //   returns 3: {"a":1, "c":-1}
 
-  var retObj = {}
-  var k
+  let retObj = {}
+  let k
 
-  func = func || function (v) {
-    return v
-  }
+  func =
+    func ||
+    function (v) {
+      return v
+    }
 
   // @todo: Issue #73
   if (Object.prototype.toString.call(arr) === '[object Array]') {

@@ -1,10 +1,10 @@
-module.exports = function call_user_func_array (cb, parameters) { // eslint-disable-line camelcase
-  //  discuss at: http://locutus.io/php/call_user_func_array/
-  // original by: Thiago Mata (http://thiagomata.blog.com)
+module.exports = function call_user_func_array(cb, parameters) {
+  //  discuss at: https://locutus.io/php/call_user_func_array/
+  // original by: Thiago Mata (https://thiagomata.blog.com)
   //  revised by: Jon Hohle
-  // improved by: Brett Zamir (http://brett-zamir.me)
-  // improved by: Diplom@t (http://difane.com/)
-  // improved by: Brett Zamir (http://brett-zamir.me)
+  // improved by: Brett Zamir (https://brett-zamir.me)
+  // improved by: Diplom@t (https://difane.com/)
+  // improved by: Brett Zamir (https://brett-zamir.me)
   //      note 1: Depending on the `cb` that is passed,
   //      note 1: this function can use `eval` and/or `new Function`.
   //      note 1: The `eval` input is however checked to only allow valid function names,
@@ -15,17 +15,17 @@ module.exports = function call_user_func_array (cb, parameters) { // eslint-disa
   //   example 2: call_user_func_array('isNaN', [1])
   //   returns 2: false
 
-  var $global = (typeof window !== 'undefined' ? window : global)
-  var func
-  var scope = null
+  const $global = typeof window !== 'undefined' ? window : global
+  let func
+  let scope = null
 
-  var validJSFunctionNamePattern = /^[_$a-zA-Z\xA0-\uFFFF][_$a-zA-Z0-9\xA0-\uFFFF]*$/
+  const validJSFunctionNamePattern = /^[_$a-zA-Z\xA0-\uFFFF][_$a-zA-Z0-9\xA0-\uFFFF]*$/
 
   if (typeof cb === 'string') {
     if (typeof $global[cb] === 'function') {
       func = $global[cb]
     } else if (cb.match(validJSFunctionNamePattern)) {
-      func = (new Function(null, 'return ' + cb)()) // eslint-disable-line no-new-func
+      func = new Function(null, 'return ' + cb)() // eslint-disable-line no-new-func
     }
   } else if (Object.prototype.toString.call(cb) === '[object Array]') {
     if (typeof cb[0] === 'string') {

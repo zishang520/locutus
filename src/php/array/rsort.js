@@ -1,11 +1,11 @@
-module.exports = function rsort (inputArr, sortFlags) {
-  //  discuss at: http://locutus.io/php/rsort/
-  // original by: Kevin van Zonneveld (http://kvz.io)
-  //  revised by: Brett Zamir (http://brett-zamir.me)
-  // improved by: Brett Zamir (http://brett-zamir.me)
+module.exports = function rsort(inputArr, sortFlags) {
+  //  discuss at: https://locutus.io/php/rsort/
+  // original by: Kevin van Zonneveld (https://kvz.io)
+  //  revised by: Brett Zamir (https://brett-zamir.me)
+  // improved by: Brett Zamir (https://brett-zamir.me)
   //      note 1: SORT_STRING (as well as natsort and natcasesort) might also be
   //      note 1: integrated into all of these functions by adapting the code at
-  //      note 1: http://sourcefrog.net/projects/natsort/natcompare.js
+  //      note 1: https://sourcefrog.net/projects/natsort/natcompare.js
   //      note 1: This function deviates from PHP in returning a copy of the array instead
   //      note 1: of acting by reference and returning true; this was necessary because
   //      note 1: IE does not allow deleting and re-adding of properties without caching
@@ -30,18 +30,18 @@ module.exports = function rsort (inputArr, sortFlags) {
   //   returns 2: {0: 'orange', 1: 'lemon', 2: 'banana', 3: 'apple'}
   //        test: skip-1
 
-  var i18nlgd = require('../i18n/i18n_loc_get_default')
-  var strnatcmp = require('../strings/strnatcmp')
+  const i18nlgd = require('../i18n/i18n_loc_get_default')
+  const strnatcmp = require('../strings/strnatcmp')
 
-  var sorter
-  var i
-  var k
-  var sortByReference = false
-  var populateArr = {}
+  let sorter
+  let i
+  let k
+  let sortByReference = false
+  let populateArr = {}
 
-  var $global = (typeof window !== 'undefined' ? window : global)
+  const $global = typeof window !== 'undefined' ? window : global
   $global.$locutus = $global.$locutus || {}
-  var $locutus = $global.$locutus
+  const $locutus = $global.$locutus
   $locutus.php = $locutus.php || {}
   $locutus.php.locales = $locutus.php.locales || {}
 
@@ -61,17 +61,17 @@ module.exports = function rsort (inputArr, sortFlags) {
     case 'SORT_NUMERIC':
       // compare items numerically
       sorter = function (a, b) {
-        return (b - a)
+        return b - a
       }
       break
     case 'SORT_REGULAR':
     default:
       // compare items normally (don't change types)
       sorter = function (b, a) {
-        var aFloat = parseFloat(a)
-        var bFloat = parseFloat(b)
-        var aNumeric = aFloat + '' === a
-        var bNumeric = bFloat + '' === b
+        const aFloat = parseFloat(a)
+        const bFloat = parseFloat(b)
+        const aNumeric = aFloat + '' === a
+        const bNumeric = bFloat + '' === b
         if (aNumeric && bNumeric) {
           return aFloat > bFloat ? 1 : aFloat < bFloat ? -1 : 0
         } else if (aNumeric && !bNumeric) {
@@ -84,10 +84,11 @@ module.exports = function rsort (inputArr, sortFlags) {
       break
   }
 
-  var iniVal = (typeof require !== 'undefined' ? require('../info/ini_get')('locutus.sortByReference') : undefined) || 'on'
+  const iniVal =
+    (typeof require !== 'undefined' ? require('../info/ini_get')('locutus.sortByReference') : undefined) || 'on'
   sortByReference = iniVal === 'on'
   populateArr = sortByReference ? inputArr : populateArr
-  var valArr = []
+  const valArr = []
 
   for (k in inputArr) {
     // Get key and value arrays

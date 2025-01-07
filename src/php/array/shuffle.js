@@ -1,20 +1,20 @@
-module.exports = function shuffle (inputArr) {
-  //  discuss at: http://locutus.io/php/shuffle/
-  // original by: Jonas Raoni Soares Silva (http://www.jsfromhell.com)
-  //  revised by: Kevin van Zonneveld (http://kvz.io)
-  //  revised by: Brett Zamir (http://brett-zamir.me)
-  // improved by: Brett Zamir (http://brett-zamir.me)
+module.exports = function shuffle(inputArr) {
+  //  discuss at: https://locutus.io/php/shuffle/
+  // original by: Jonas Raoni Soares Silva (https://www.jsfromhell.com)
+  //  revised by: Kevin van Zonneveld (https://kvz.io)
+  //  revised by: Brett Zamir (https://brett-zamir.me)
+  // improved by: Brett Zamir (https://brett-zamir.me)
   //   example 1: var $data = {5:'a', 2:'3', 3:'c', 4:5, 'q':5}
   //   example 1: ini_set('locutus.sortByReference', true)
   //   example 1: shuffle($data)
   //   example 1: var $result = $data.q
   //   returns 1: 5
 
-  var valArr = []
-  var k = ''
-  var i = 0
-  var sortByReference = false
-  var populateArr = []
+  const valArr = []
+  let k = ''
+  let i = 0
+  let sortByReference = false
+  let populateArr = []
 
   for (k in inputArr) {
     // Get key and value arrays
@@ -29,7 +29,8 @@ module.exports = function shuffle (inputArr) {
     return 0.5 - Math.random()
   })
 
-  var iniVal = (typeof require !== 'undefined' ? require('../info/ini_get')('locutus.sortByReference') : undefined) || 'on'
+  const iniVal =
+    (typeof require !== 'undefined' ? require('../info/ini_get')('locutus.sortByReference') : undefined) || 'on'
   sortByReference = iniVal === 'on'
   populateArr = sortByReference ? inputArr : populateArr
 

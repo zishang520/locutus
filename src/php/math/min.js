@@ -1,5 +1,5 @@
-module.exports = function min () {
-  //  discuss at: http://locutus.io/php/min/
+module.exports = function min() {
+  //  discuss at: https://locutus.io/php/min/
   // original by: Onno Marsman (https://twitter.com/onnomarsman)
   //  revised by: Onno Marsman (https://twitter.com/onnomarsman)
   // improved by: Jack
@@ -17,18 +17,18 @@ module.exports = function min () {
   //   example 6: min([2, 4, 8], [2, 5, 7])
   //   returns 6: [2, 4, 8]
 
-  var ar
-  var retVal
-  var i = 0
-  var n = 0
-  var argv = arguments
-  var argc = argv.length
-  var _obj2Array = function (obj) {
+  let ar
+  let retVal
+  let i = 0
+  let n = 0
+  const argv = arguments
+  const argc = argv.length
+  const _obj2Array = function (obj) {
     if (Object.prototype.toString.call(obj) === '[object Array]') {
       return obj
     }
-    var ar = []
-    for (var i in obj) {
+    const ar = []
+    for (const i in obj) {
       if (obj.hasOwnProperty(i)) {
         ar.push(obj[i])
       }
@@ -36,12 +36,12 @@ module.exports = function min () {
     return ar
   }
 
-  var _compare = function (current, next) {
-    var i = 0
-    var n = 0
-    var tmp = 0
-    var nl = 0
-    var cl = 0
+  const _compare = function (current, next) {
+    let i = 0
+    let n = 0
+    let tmp = 0
+    let nl = 0
+    let cl = 0
 
     if (current === next) {
       return 0
@@ -73,19 +73,19 @@ module.exports = function min () {
       if (current === 0) {
         return 0
       }
-      return (current < 0 ? 1 : -1)
+      return current < 0 ? 1 : -1
     } else if (isNaN(current) && !isNaN(next)) {
       if (next === 0) {
         return 0
       }
-      return (next > 0 ? 1 : -1)
+      return next > 0 ? 1 : -1
     }
 
     if (next === current) {
       return 0
     }
 
-    return (next > current ? 1 : -1)
+    return next > current ? 1 : -1
   }
 
   if (argc === 0) {

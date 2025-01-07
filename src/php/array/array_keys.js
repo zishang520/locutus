@@ -1,20 +1,20 @@
-module.exports = function array_keys (input, searchValue, argStrict) { // eslint-disable-line camelcase
-  //  discuss at: http://locutus.io/php/array_keys/
-  // original by: Kevin van Zonneveld (http://kvz.io)
-  //    input by: Brett Zamir (http://brett-zamir.me)
+module.exports = function array_keys(input, searchValue, argStrict) {
+  //  discuss at: https://locutus.io/php/array_keys/
+  // original by: Kevin van Zonneveld (https://kvz.io)
+  //    input by: Brett Zamir (https://brett-zamir.me)
   //    input by: P
-  // bugfixed by: Kevin van Zonneveld (http://kvz.io)
-  // bugfixed by: Brett Zamir (http://brett-zamir.me)
+  // bugfixed by: Kevin van Zonneveld (https://kvz.io)
+  // bugfixed by: Brett Zamir (https://brett-zamir.me)
   // improved by: jd
-  // improved by: Brett Zamir (http://brett-zamir.me)
+  // improved by: Brett Zamir (https://brett-zamir.me)
   //   example 1: array_keys( {firstname: 'Kevin', surname: 'van Zonneveld'} )
   //   returns 1: [ 'firstname', 'surname' ]
 
-  var search = typeof searchValue !== 'undefined'
-  var tmpArr = []
-  var strict = !!argStrict
-  var include = true
-  var key = ''
+  const search = typeof searchValue !== 'undefined'
+  const tmpArr = []
+  const strict = !!argStrict
+  let include = true
+  let key = ''
 
   for (key in input) {
     if (input.hasOwnProperty(key)) {

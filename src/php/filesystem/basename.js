@@ -1,7 +1,7 @@
-module.exports = function basename (path, suffix) {
-  //  discuss at: http://locutus.io/php/basename/
-  // original by: Kevin van Zonneveld (http://kvz.io)
-  // improved by: Ash Searle (http://hexmen.com/blog/)
+module.exports = function basename(path, suffix) {
+  //  discuss at: https://locutus.io/php/basename/
+  // original by: Kevin van Zonneveld (https://kvz.io)
+  // improved by: Ash Searle (https://hexmen.com/blog/)
   // improved by: Lincoln Ramsay
   // improved by: djmix
   // improved by: Dmitry Gorelenkov
@@ -14,8 +14,8 @@ module.exports = function basename (path, suffix) {
   //   example 4: basename('/some/path_ext.ext/','.ext')
   //   returns 4: 'path_ext'
 
-  var b = path
-  var lastChar = b.charAt(b.length - 1)
+  let b = path
+  const lastChar = b.charAt(b.length - 1)
 
   if (lastChar === '/' || lastChar === '\\') {
     b = b.slice(0, -1)

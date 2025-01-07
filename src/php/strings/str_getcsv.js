@@ -1,6 +1,6 @@
-module.exports = function str_getcsv (input, delimiter, enclosure, escape) { // eslint-disable-line camelcase
-  //  discuss at: http://locutus.io/php/str_getcsv/
-  // original by: Brett Zamir (http://brett-zamir.me)
+module.exports = function str_getcsv(input, delimiter, enclosure, escape) {
+  //  discuss at: https://locutus.io/php/str_getcsv/
+  // original by: Brett Zamir (https://brett-zamir.me)
   //   example 1: str_getcsv('"abc","def","ghi"')
   //   returns 1: ['abc', 'def', 'ghi']
   //   example 2: str_getcsv('"row2""cell1","row2cell2","row2cell3"', null, null, '"')
@@ -23,15 +23,15 @@ module.exports = function str_getcsv (input, delimiter, enclosure, escape) { // 
     Should also test newlines within
   */
 
-  var i
-  var inpLen
-  var output = []
-  var _backwards = function (str) {
+  let i
+  let inpLen
+  const output = []
+  const _backwards = function (str) {
     // We need to go backwards to simulate negative look-behind (don't split on
     // an escaped enclosure even if followed by the delimiter and another enclosure mark)
     return str.split('').reverse().join('')
   }
-  var _pq = function (str) {
+  const _pq = function (str) {
     // preg_quote()
     return String(str).replace(/([\\.+*?[^\]$(){}=!<>|:])/g, '\\$1')
   }
@@ -39,12 +39,10 @@ module.exports = function str_getcsv (input, delimiter, enclosure, escape) { // 
   delimiter = delimiter || ','
   enclosure = enclosure || '"'
   escape = escape || '\\'
-  var pqEnc = _pq(enclosure)
-  var pqEsc = _pq(escape)
+  const pqEnc = _pq(enclosure)
+  const pqEsc = _pq(escape)
 
-  input = input
-    .replace(new RegExp('^\\s*' + pqEnc), '')
-    .replace(new RegExp(pqEnc + '\\s*$'), '')
+  input = input.replace(new RegExp('^\\s*' + pqEnc), '').replace(new RegExp(pqEnc + '\\s*$'), '')
 
   // PHP behavior may differ by including whitespace even outside of the enclosure
   input = _backwards(input)
@@ -52,8 +50,7 @@ module.exports = function str_getcsv (input, delimiter, enclosure, escape) { // 
     .reverse()
 
   for (i = 0, inpLen = input.length; i < inpLen; i++) {
-    output.push(_backwards(input[i])
-      .replace(new RegExp(pqEsc + pqEnc, 'g'), enclosure))
+    output.push(_backwards(input[i]).replace(new RegExp(pqEsc + pqEnc, 'g'), enclosure))
   }
 
   return output

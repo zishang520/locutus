@@ -1,21 +1,21 @@
-module.exports = function array_diff_key (arr1) { // eslint-disable-line camelcase
-  //  discuss at: http://locutus.io/php/array_diff_key/
-  // original by: Ates Goral (http://magnetiq.com)
-  //  revised by: Brett Zamir (http://brett-zamir.me)
+module.exports = function array_diff_key(arr1) {
+  //  discuss at: https://locutus.io/php/array_diff_key/
+  // original by: Ates Goral (https://magnetiq.com)
+  //  revised by: Brett Zamir (https://brett-zamir.me)
   //    input by: Everlasto
   //   example 1: array_diff_key({red: 1, green: 2, blue: 3, white: 4}, {red: 5})
   //   returns 1: {"green":2, "blue":3, "white":4}
   //   example 2: array_diff_key({red: 1, green: 2, blue: 3, white: 4}, {red: 5}, {red: 5})
   //   returns 2: {"green":2, "blue":3, "white":4}
 
-  var argl = arguments.length
-  var retArr = {}
-  var k1 = ''
-  var i = 1
-  var k = ''
-  var arr = {}
+  const argl = arguments.length
+  const retArr = {}
+  let k1 = ''
+  let i = 1
+  let k = ''
+  let arr = {}
 
-  arr1keys: for (k1 in arr1) { // eslint-disable-line no-labels
+  arr1keys: for (k1 in arr1) {
     for (i = 1; i < argl; i++) {
       arr = arguments[i]
       for (k in arr) {

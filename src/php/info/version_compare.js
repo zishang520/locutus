@@ -1,9 +1,9 @@
-module.exports = function version_compare (v1, v2, operator) { // eslint-disable-line camelcase
-  //       discuss at: http://locutus.io/php/version_compare/
-  //      original by: Philippe Jausions (http://pear.php.net/user/jausions)
-  //      original by: Aidan Lister (http://aidanlister.com/)
-  // reimplemented by: Kankrelune (http://www.webfaktory.info/)
-  //      improved by: Brett Zamir (http://brett-zamir.me)
+module.exports = function version_compare(v1, v2, operator) {
+  //       discuss at: https://locutus.io/php/version_compare/
+  //      original by: Philippe Jausions (https://pear.php.net/user/jausions)
+  //      original by: Aidan Lister (https://aidanlister.com/)
+  // reimplemented by: Kankrelune (https://www.webfaktory.info/)
+  //      improved by: Brett Zamir (https://brett-zamir.me)
   //      improved by: Scott Baker
   //      improved by: Theriault (https://github.com/Theriault)
   //        example 1: version_compare('8.2.5rc', '8.2.5a')
@@ -16,9 +16,9 @@ module.exports = function version_compare (v1, v2, operator) { // eslint-disable
   //        returns 4: 1
 
   // Important: compare must be initialized at 0.
-  var i
-  var x
-  var compare = 0
+  let i
+  let x
+  let compare = 0
 
   // vm maps textual PHP versions to negatives so they're less than 0.
   // PHP currently defines these as CASE-SENSITIVE. It is important to
@@ -27,17 +27,17 @@ module.exports = function version_compare (v1, v2, operator) { // eslint-disable
   // (1alpha is < 1 and < 1.1 but > 1dev1)
   // If a non-numerical value can't be mapped to this table, it receives
   // -7 as its value.
-  var vm = {
-    'dev': -6,
-    'alpha': -5,
-    'a': -5,
-    'beta': -4,
-    'b': -4,
-    'RC': -3,
-    'rc': -3,
+  const vm = {
+    dev: -6,
+    alpha: -5,
+    a: -5,
+    beta: -4,
+    b: -4,
+    RC: -3,
+    rc: -3,
     '#': -2,
-    'p': 1,
-    'pl': 1
+    p: 1,
+    pl: 1,
   }
 
   // This function will be called to prepare each version argument.
@@ -49,17 +49,17 @@ module.exports = function version_compare (v1, v2, operator) { // eslint-disable
   // even less than an unexisting value in vm (-7), hence [-8].
   // It's also important to not strip spaces because of this.
   //   version_compare('', ' ') === 1
-  var _prepVersion = function (v) {
+  const _prepVersion = function (v) {
     v = ('' + v).replace(/[_\-+]/g, '.')
     v = v.replace(/([^.\d]+)/g, '.$1.').replace(/\.{2,}/g, '.')
-    return (!v.length ? [-8] : v.split('.'))
+    return !v.length ? [-8] : v.split('.')
   }
   // This converts a version component to a number.
   // Empty component becomes 0.
   // Non-numerical component becomes a negative number.
   // Numerical component becomes itself as an integer.
-  var _numVersion = function (v) {
-    return !v ? 0 : (isNaN(v) ? vm[v] || -7 : parseInt(v, 10))
+  const _numVersion = function (v) {
+    return !v ? 0 : isNaN(v) ? vm[v] || -7 : parseInt(v, 10)
   }
 
   v1 = _prepVersion(v1)
@@ -89,25 +89,25 @@ module.exports = function version_compare (v1, v2, operator) { // eslint-disable
   switch (operator) {
     case '>':
     case 'gt':
-      return (compare > 0)
+      return compare > 0
     case '>=':
     case 'ge':
-      return (compare >= 0)
+      return compare >= 0
     case '<=':
     case 'le':
-      return (compare <= 0)
+      return compare <= 0
     case '===':
     case '=':
     case 'eq':
-      return (compare === 0)
+      return compare === 0
     case '<>':
     case '!==':
     case 'ne':
-      return (compare !== 0)
+      return compare !== 0
     case '':
     case '<':
     case 'lt':
-      return (compare < 0)
+      return compare < 0
     default:
       return null
   }

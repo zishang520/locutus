@@ -1,19 +1,19 @@
-module.exports = function count_chars (str, mode) { // eslint-disable-line camelcase
-  //  discuss at: http://locutus.io/php/count_chars/
-  // original by: Ates Goral (http://magnetiq.com)
+module.exports = function count_chars(str, mode) {
+  //  discuss at: https://locutus.io/php/count_chars/
+  // original by: Ates Goral (https://magnetiq.com)
   // improved by: Jack
   // bugfixed by: Onno Marsman (https://twitter.com/onnomarsman)
-  // bugfixed by: Kevin van Zonneveld (http://kvz.io)
-  //    input by: Brett Zamir (http://brett-zamir.me)
+  // bugfixed by: Kevin van Zonneveld (https://kvz.io)
+  //    input by: Brett Zamir (https://brett-zamir.me)
   //  revised by: Theriault (https://github.com/Theriault)
   //   example 1: count_chars("Hello World!", 3)
   //   returns 1: " !HWdelor"
   //   example 2: count_chars("Hello World!", 1)
   //   returns 2: {32:1,33:1,72:1,87:1,100:1,101:1,108:3,111:2,114:1}
 
-  var result = {}
-  var resultArr = []
-  var i
+  const result = {}
+  const resultArr = []
+  let i
 
   str = ('' + str)
     .split('')
@@ -32,7 +32,7 @@ module.exports = function count_chars (str, mode) { // eslint-disable-line camel
       delete result[str[i].charCodeAt(0)]
     }
     for (i in result) {
-      result[i] = (mode === 4) ? String.fromCharCode(i) : 0
+      result[i] = mode === 4 ? String.fromCharCode(i) : 0
     }
   } else if (mode === 3) {
     for (i = 0; i !== str.length; i += 1) {

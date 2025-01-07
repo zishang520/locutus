@@ -1,6 +1,6 @@
-module.exports = function json_last_error () { // eslint-disable-line camelcase
-  //  discuss at: http://phpjs.org/functions/json_last_error/
-  // original by: Brett Zamir (http://brett-zamir.me)
+module.exports = function json_last_error() {
+  //  discuss at: https://phpjs.org/functions/json_last_error/
+  // original by: Brett Zamir (https://brett-zamir.me)
   //   example 1: json_last_error()
   //   returns 1: 0
 
@@ -14,9 +14,9 @@ module.exports = function json_last_error () { // eslint-disable-line camelcase
   // but JSON functions auto-escape these, so error not possible in JavaScript
   // JSON_ERROR_SYNTAX = 4
 
-  var $global = (typeof window !== 'undefined' ? window : global)
+  const $global = typeof window !== 'undefined' ? window : global
   $global.$locutus = $global.$locutus || {}
-  var $locutus = $global.$locutus
+  const $locutus = $global.$locutus
   $locutus.php = $locutus.php || {}
 
   return $locutus.php && $locutus.php.last_error_json ? $locutus.php.last_error_json : 0

@@ -1,16 +1,16 @@
-module.exports = function strptime (dateStr, format) {
-  //  discuss at: http://locutus.io/php/strptime/
-  // original by: Brett Zamir (http://brett-zamir.me)
+module.exports = function strptime(dateStr, format) {
+  //  discuss at: https://locutus.io/php/strptime/
+  // original by: Brett Zamir (https://brett-zamir.me)
   // original by: strftime
   //   example 1: strptime('20091112222135', '%Y%m%d%H%M%S') // Return value will depend on date and locale
   //   returns 1: {tm_sec: 35, tm_min: 21, tm_hour: 22, tm_mday: 12, tm_mon: 10, tm_year: 109, tm_wday: 4, tm_yday: 315, unparsed: ''}
   //   example 2: strptime('2009extra', '%Y')
   //   returns 2: {tm_sec:0, tm_min:0, tm_hour:0, tm_mday:0, tm_mon:0, tm_year:109, tm_wday:3, tm_yday: -1, unparsed: 'extra'}
 
-  var setlocale = require('../strings/setlocale')
-  var arrayMap = require('../array/array_map')
+  const setlocale = require('../strings/setlocale')
+  const arrayMap = require('../array/array_map')
 
-  var retObj = {
+  const retObj = {
     tm_sec: 0,
     tm_min: 0,
     tm_hour: 0,
@@ -19,18 +19,18 @@ module.exports = function strptime (dateStr, format) {
     tm_year: 0,
     tm_wday: 0,
     tm_yday: 0,
-    unparsed: ''
+    unparsed: '',
   }
-  var i = 0
-  var j = 0
-  var amPmOffset = 0
-  var prevHour = false
-  var _reset = function (dateObj, realMday) {
+  let i = 0
+  let j = 0
+  let amPmOffset = 0
+  let prevHour = false
+  const _reset = function (dateObj, realMday) {
     // realMday is to allow for a value of 0 in return results (but without
     // messing up the Date() object)
-    var jan1
-    var o = retObj
-    var d = dateObj
+    let jan1
+    const o = retObj
+    const d = dateObj
     o.tm_sec = d.getUTCSeconds()
     o.tm_min = d.getUTCMinutes()
     o.tm_hour = d.getUTCHours()
@@ -41,24 +41,19 @@ module.exports = function strptime (dateStr, format) {
     jan1 = new Date(Date.UTC(d.getUTCFullYear(), 0, 1))
     o.tm_yday = Math.ceil((d - jan1) / (1000 * 60 * 60 * 24))
   }
-  var _date = function () {
-    var o = retObj
+  const _date = function () {
+    const o = retObj
     // We set date to at least 1 to ensure year or month doesn't go backwards
-    return _reset(new Date(Date.UTC(
-      o.tm_year + 1900,
-      o.tm_mon,
-      o.tm_mday || 1,
-      o.tm_hour,
-      o.tm_min,
-      o.tm_sec
-    )),
-    o.tm_mday)
+    return _reset(
+      new Date(Date.UTC(o.tm_year + 1900, o.tm_mon, o.tm_mday || 1, o.tm_hour, o.tm_min, o.tm_sec)),
+      o.tm_mday,
+    )
   }
 
-  var _NWS = /\S/
-  var _WS = /\s/
+  const _NWS = /\S/
+  const _WS = /\s/
 
-  var _aggregates = {
+  const _aggregates = {
     c: 'locale',
     D: '%m/%d/%y',
     F: '%y-%m-%d',
@@ -66,10 +61,10 @@ module.exports = function strptime (dateStr, format) {
     R: '%H:%M',
     T: '%H:%M:%S',
     x: 'locale',
-    X: 'locale'
+    X: 'locale',
   }
 
-  /* Fix: Locale alternatives are supported though not documented in PHP; see http://linux.die.net/man/3/strptime
+  /* Fix: Locale alternatives are supported though not documented in PHP; see https://linux.die.net/man/3/strptime
     Ec
     EC
     Ex
@@ -87,57 +82,56 @@ module.exports = function strptime (dateStr, format) {
     OW
     Oy
   */
-  var _pregQuote = function (str) {
+  const _pregQuote = function (str) {
     return (str + '').replace(/([\\.+*?[^\]$(){}=!<>|:])/g, '\\$1')
   }
 
   // ensure setup of localization variables takes place
   setlocale('LC_ALL', 0)
 
-  var $global = (typeof window !== 'undefined' ? window : global)
+  const $global = typeof window !== 'undefined' ? window : global
   $global.$locutus = $global.$locutus || {}
-  var $locutus = $global.$locutus
-  var locale = $locutus.php.localeCategories.LC_TIME
-  var lcTime = $locutus.php.locales[locale].LC_TIME
+  const $locutus = $global.$locutus
+  const locale = $locutus.php.localeCategories.LC_TIME
+  const lcTime = $locutus.php.locales[locale].LC_TIME
 
   // First replace aggregates (run in a loop because an agg may be made up of other aggs)
   while (format.match(/%[cDFhnrRtTxX]/)) {
     format = format.replace(/%([cDFhnrRtTxX])/g, function (m0, m1) {
-      var f = _aggregates[m1]
-      return (f === 'locale' ? lcTime[m1] : f)
+      const f = _aggregates[m1]
+      return f === 'locale' ? lcTime[m1] : f
     })
   }
 
-  var _addNext = function (j, regex, cb) {
+  const _addNext = function (j, regex, cb) {
     if (typeof regex === 'string') {
       regex = new RegExp('^' + regex, 'i')
     }
-    var check = dateStr.slice(j)
-    var match = regex.exec(check)
+    const check = dateStr.slice(j)
+    const match = regex.exec(check)
     // Even if the callback returns null after assigning to the
     // return object, the object won't be saved anyways
-    var testNull = match ? cb.apply(null, match) : null
+    const testNull = match ? cb.apply(null, match) : null
     if (testNull === null) {
       throw new Error('No match in string')
     }
     return j + match[0].length
   }
 
-  var _addLocalized = function (j, formatChar, category) {
+  const _addLocalized = function (j, formatChar, category) {
     // Could make each parenthesized instead and pass index to callback:
-    return _addNext(j, arrayMap(_pregQuote, lcTime[formatChar]).join('|'),
-      function (m) {
-        var match = lcTime[formatChar].search(new RegExp('^' + _pregQuote(m) + '$', 'i'))
-        if (match) {
-          retObj[category] = match[0]
-        }
-      })
+    return _addNext(j, arrayMap(_pregQuote, lcTime[formatChar]).join('|'), function (m) {
+      const match = lcTime[formatChar].search(new RegExp('^' + _pregQuote(m) + '$', 'i'))
+      if (match) {
+        retObj[category] = match[0]
+      }
+    })
   }
 
   // BEGIN PROCESSING CHARACTERS
   for (i = 0, j = 0; i < format.length; i++) {
     if (format.charAt(i) === '%') {
-      var literalPos = ['%', 'n', 't'].indexOf(format.charAt(i + 1))
+      const literalPos = ['%', 'n', 't'].indexOf(format.charAt(i + 1))
       if (literalPos !== -1) {
         if (['%', '\n', '\t'].indexOf(dateStr.charAt(j)) === literalPos) {
           // a matched literal
@@ -174,26 +168,26 @@ module.exports = function strptime (dateStr, format) {
           case 'C':
             // 0+; century (19 for 20th)
             // PHP docs say two-digit, but accepts one-digit (two-digit max):
-            j = _addNext(j, /^\d?\d/,
+            j = _addNext(
+              j,
+              /^\d?\d/,
 
-            function (d) {
-              var year = (parseInt(d, 10) - 19) * 100
-              retObj.tm_year = year
-              _date()
-              if (!retObj.tm_yday) {
-                retObj.tm_yday = -1
-              }
-              // Also changes wday; and sets yday to -1 (always?)
-            })
+              function (d) {
+                const year = (parseInt(d, 10) - 19) * 100
+                retObj.tm_year = year
+                _date()
+                if (!retObj.tm_yday) {
+                  retObj.tm_yday = -1
+                }
+                // Also changes wday; and sets yday to -1 (always?)
+              },
+            )
             break
           case 'd':
           case 'e':
             // 1-31 day
-            j = _addNext(j, formatChar === 'd'
-              ? /^(0[1-9]|[1-2]\d|3[0-1])/
-              : /^([1-2]\d|3[0-1]|[1-9])/,
-            function (d) {
-              var dayMonth = parseInt(d, 10)
+            j = _addNext(j, formatChar === 'd' ? /^(0[1-9]|[1-2]\d|3[0-1])/ : /^([1-2]\d|3[0-1]|[1-9])/, function (d) {
+              const dayMonth = parseInt(d, 10)
               retObj.tm_mday = dayMonth
               // Also changes w_day, y_day
               _date()
@@ -208,7 +202,7 @@ module.exports = function strptime (dateStr, format) {
           case 'H':
             // 00-23 hours
             j = _addNext(j, /^([0-1]\d|2[0-3])/, function (d) {
-              var hour = parseInt(d, 10)
+              const hour = parseInt(d, 10)
               retObj.tm_hour = hour
               // Changes nothing else
             })
@@ -216,11 +210,8 @@ module.exports = function strptime (dateStr, format) {
           case 'l':
           case 'I':
             // 01-12 hours
-            j = _addNext(j, formatChar === 'l'
-              ? /^([1-9]|1[0-2])/
-              : /^(0[1-9]|1[0-2])/,
-            function (d) {
-              var hour = parseInt(d, 10) - 1 + amPmOffset
+            j = _addNext(j, formatChar === 'l' ? /^([1-9]|1[0-2])/ : /^(0[1-9]|1[0-2])/, function (d) {
+              const hour = parseInt(d, 10) - 1 + amPmOffset
               retObj.tm_hour = hour
               // Used for coordinating with am-pm
               prevHour = true
@@ -230,7 +221,7 @@ module.exports = function strptime (dateStr, format) {
           case 'j':
             // 001-366 day of year
             j = _addNext(j, /^(00[1-9]|0[1-9]\d|[1-2]\d\d|3[0-6][0-6])/, function (d) {
-              var dayYear = parseInt(d, 10) - 1
+              const dayYear = parseInt(d, 10) - 1
               retObj.tm_yday = dayYear
               // Changes nothing else
               // (oddly, since if original by a given year, could calculate other fields)
@@ -239,18 +230,18 @@ module.exports = function strptime (dateStr, format) {
           case 'm':
             // 01-12 month
             j = _addNext(j, /^(0[1-9]|1[0-2])/, function (d) {
-              var month = parseInt(d, 10) - 1
+              const month = parseInt(d, 10) - 1
               retObj.tm_mon = month
-            // Also sets wday and yday
+              // Also sets wday and yday
               _date()
             })
             break
           case 'M':
             // 00-59 minutes
             j = _addNext(j, /^[0-5]\d/, function (d) {
-              var minute = parseInt(d, 10)
+              const minute = parseInt(d, 10)
               retObj.tm_min = minute
-            // Changes nothing else
+              // Changes nothing else
             })
             break
           case 'P':
@@ -262,8 +253,7 @@ module.exports = function strptime (dateStr, format) {
             j = _addNext(j, /^(am|pm)/i, function (d) {
               // No effect on 'H' since already 24 hours but
               //   works before or after setting of l/I hour
-              amPmOffset = (/a/)
-              .test(d) ? 0 : 12
+              amPmOffset = /a/.test(d) ? 0 : 12
               if (prevHour) {
                 retObj.tm_hour += amPmOffset
               }
@@ -272,21 +262,24 @@ module.exports = function strptime (dateStr, format) {
           case 's':
             // Unix timestamp (in seconds)
             j = _addNext(j, /^\d+/, function (d) {
-              var timestamp = parseInt(d, 10)
-              var date = new Date(Date.UTC(timestamp * 1000))
+              const timestamp = parseInt(d, 10)
+              const date = new Date(Date.UTC(timestamp * 1000))
               _reset(date)
               // Affects all fields, but can't be negative (and initial + not allowed)
             })
             break
           case 'S':
             // 00-59 seconds
-            j = _addNext(j, /^[0-5]\d/, // strptime also accepts 60-61 for some reason
+            j = _addNext(
+              j,
+              /^[0-5]\d/, // strptime also accepts 60-61 for some reason
 
-            function (d) {
-              var second = parseInt(d, 10)
-              retObj.tm_sec = second
-              // Changes nothing else
-            })
+              function (d) {
+                const second = parseInt(d, 10)
+                retObj.tm_sec = second
+                // Changes nothing else
+              },
+            )
             break
           case 'u':
           case 'w':
@@ -303,34 +296,40 @@ module.exports = function strptime (dateStr, format) {
             break
           case 'y':
             // 69 (or higher) for 1969+, 68 (or lower) for 2068-
-             // PHP docs say two-digit, but accepts one-digit (two-digit max):
-            j = _addNext(j, /^\d?\d/,
+            // PHP docs say two-digit, but accepts one-digit (two-digit max):
+            j = _addNext(
+              j,
+              /^\d?\d/,
 
-            function (d) {
-              d = parseInt(d, 10)
-              var year = d >= 69 ? d : d + 100
-              retObj.tm_year = year
-              _date()
-              if (!retObj.tm_yday) {
-                retObj.tm_yday = -1
-              }
-              // Also changes wday; and sets yday to -1 (always?)
-            })
+              function (d) {
+                d = parseInt(d, 10)
+                const year = d >= 69 ? d : d + 100
+                retObj.tm_year = year
+                _date()
+                if (!retObj.tm_yday) {
+                  retObj.tm_yday = -1
+                }
+                // Also changes wday; and sets yday to -1 (always?)
+              },
+            )
             break
           case 'Y':
             // 2010 (4-digit year)
             // PHP docs say four-digit, but accepts one-digit (four-digit max):
-            j = _addNext(j, /^\d{1,4}/,
+            j = _addNext(
+              j,
+              /^\d{1,4}/,
 
-            function (d) {
-              var year = (parseInt(d, 10)) - 1900
-              retObj.tm_year = year
-              _date()
-              if (!retObj.tm_yday) {
-                retObj.tm_yday = -1
-              }
-              // Also changes wday; and sets yday to -1 (always?)
-            })
+              function (d) {
+                const year = parseInt(d, 10) - 1900
+                retObj.tm_year = year
+                _date()
+                if (!retObj.tm_yday) {
+                  retObj.tm_yday = -1
+                }
+                // Also changes wday; and sets yday to -1 (always?)
+              },
+            )
             break
           case 'z':
             // Timezone; on my system, strftime gives -0800,

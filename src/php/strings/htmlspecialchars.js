@@ -1,16 +1,16 @@
-module.exports = function htmlspecialchars (string, quoteStyle, charset, doubleEncode) {
-  //       discuss at: http://locutus.io/php/htmlspecialchars/
+module.exports = function htmlspecialchars(string, quoteStyle, charset, doubleEncode) {
+  //       discuss at: https://locutus.io/php/htmlspecialchars/
   //      original by: Mirek Slugen
-  //      improved by: Kevin van Zonneveld (http://kvz.io)
+  //      improved by: Kevin van Zonneveld (https://kvz.io)
   //      bugfixed by: Nathan
   //      bugfixed by: Arno
-  //      bugfixed by: Brett Zamir (http://brett-zamir.me)
-  //      bugfixed by: Brett Zamir (http://brett-zamir.me)
-  //       revised by: Kevin van Zonneveld (http://kvz.io)
+  //      bugfixed by: Brett Zamir (https://brett-zamir.me)
+  //      bugfixed by: Brett Zamir (https://brett-zamir.me)
+  //       revised by: Kevin van Zonneveld (https://kvz.io)
   //         input by: Ratheous
-  //         input by: Mailfaker (http://www.weedem.fr/)
+  //         input by: Mailfaker (https://www.weedem.fr/)
   //         input by: felix
-  // reimplemented by: Brett Zamir (http://brett-zamir.me)
+  // reimplemented by: Brett Zamir (https://brett-zamir.me)
   //           note 1: charset argument not supported
   //        example 1: htmlspecialchars("<a href='test'>Test</a>", 'ENT_QUOTES')
   //        returns 1: '&lt;a href=&#039;test&#039;&gt;Test&lt;/a&gt;'
@@ -19,9 +19,9 @@ module.exports = function htmlspecialchars (string, quoteStyle, charset, doubleE
   //        example 3: htmlspecialchars('my "&entity;" is still here', null, null, false)
   //        returns 3: 'my &quot;&entity;&quot; is still here'
 
-  var optTemp = 0
-  var i = 0
-  var noquotes = false
+  let optTemp = 0
+  let i = 0
+  let noquotes = false
   if (typeof quoteStyle === 'undefined' || quoteStyle === null) {
     quoteStyle = 2
   }
@@ -33,17 +33,15 @@ module.exports = function htmlspecialchars (string, quoteStyle, charset, doubleE
     string = string.replace(/&/g, '&amp;')
   }
 
-  string = string
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
+  string = string.replace(/</g, '&lt;').replace(/>/g, '&gt;')
 
-  var OPTS = {
-    'ENT_NOQUOTES': 0,
-    'ENT_HTML_QUOTE_SINGLE': 1,
-    'ENT_HTML_QUOTE_DOUBLE': 2,
-    'ENT_COMPAT': 2,
-    'ENT_QUOTES': 3,
-    'ENT_IGNORE': 4
+  const OPTS = {
+    ENT_NOQUOTES: 0,
+    ENT_HTML_QUOTE_SINGLE: 1,
+    ENT_HTML_QUOTE_DOUBLE: 2,
+    ENT_COMPAT: 2,
+    ENT_QUOTES: 3,
+    ENT_IGNORE: 4,
   }
   if (quoteStyle === 0) {
     noquotes = true

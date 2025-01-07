@@ -1,43 +1,43 @@
-module.exports = function xdiff_string_diff (oldData, newData, contextLines, minimal) { // eslint-disable-line camelcase
-  //  discuss at: http://locutus.io/php/xdiff_string_diff
-  // original by: Brett Zamir (http://brett-zamir.me)
-  //    based on: Imgen Tata (http://www.myipdf.com/)
-  // bugfixed by: Imgen Tata (http://www.myipdf.com/)
-  // improved by: Brett Zamir (http://brett-zamir.me)
+module.exports = function xdiff_string_diff(oldData, newData, contextLines, minimal) {
+  //  discuss at: https://locutus.io/php/xdiff_string_diff
+  // original by: Brett Zamir (https://brett-zamir.me)
+  //    based on: Imgen Tata (https://www.myipdf.com/)
+  // bugfixed by: Imgen Tata (https://www.myipdf.com/)
+  // improved by: Brett Zamir (https://brett-zamir.me)
   //      note 1: The minimal argument is not currently supported
   //   example 1: xdiff_string_diff('', 'Hello world!')
   //   returns 1: '@@ -0,0 +1,1 @@\n+Hello world!'
 
   // (This code was done by Imgen Tata; I have only reformatted for use in Locutus)
 
-  // See http://en.wikipedia.org/wiki/Diff#Unified_format
-  var i = 0
-  var j = 0
-  var k = 0
-  var oriHunkStart
-  var newHunkStart
-  var oriHunkEnd
-  var newHunkEnd
-  var oriHunkLineNo
-  var newHunkLineNo
-  var oriHunkSize
-  var newHunkSize
-  var MAX_CONTEXT_LINES = Number.POSITIVE_INFINITY // Potential configuration
-  var MIN_CONTEXT_LINES = 0
-  var DEFAULT_CONTEXT_LINES = 3
-  var HEADER_PREFIX = '@@ ' //
-  var HEADER_SUFFIX = ' @@'
-  var ORIGINAL_INDICATOR = '-'
-  var NEW_INDICATOR = '+'
-  var RANGE_SEPARATOR = ','
-  var CONTEXT_INDICATOR = ' '
-  var DELETION_INDICATOR = '-'
-  var ADDITION_INDICATOR = '+'
-  var oriLines
-  var newLines
-  var NEW_LINE = '\n'
+  // See https://en.wikipedia.org/wiki/Diff#Unified_format
+  let i = 0
+  let j = 0
+  let k = 0
+  let oriHunkStart
+  let newHunkStart
+  let oriHunkEnd
+  let newHunkEnd
+  let oriHunkLineNo
+  let newHunkLineNo
+  let oriHunkSize
+  let newHunkSize
+  const MAX_CONTEXT_LINES = Number.POSITIVE_INFINITY // Potential configuration
+  const MIN_CONTEXT_LINES = 0
+  const DEFAULT_CONTEXT_LINES = 3
+  const HEADER_PREFIX = '@@ ' //
+  const HEADER_SUFFIX = ' @@'
+  const ORIGINAL_INDICATOR = '-'
+  const NEW_INDICATOR = '+'
+  const RANGE_SEPARATOR = ','
+  const CONTEXT_INDICATOR = ' '
+  const DELETION_INDICATOR = '-'
+  const ADDITION_INDICATOR = '+'
+  let oriLines
+  let newLines
+  const NEW_LINE = '\n'
 
-  var _trim = function (text) {
+  const _trim = function (text) {
     if (typeof text !== 'string') {
       throw new Error('String parameter required')
     }
@@ -45,14 +45,14 @@ module.exports = function xdiff_string_diff (oldData, newData, contextLines, min
     return text.replace(/(^\s*)|(\s*$)/g, '')
   }
 
-  var _verifyType = function (type) {
-    var args = arguments
-    var argsLen = arguments.length
-    var basicTypes = ['number', 'boolean', 'string', 'function', 'object', 'undefined']
-    var basicType
-    var i
-    var j
-    var typeOfType = typeof type
+  const _verifyType = function (type) {
+    const args = arguments
+    const argsLen = arguments.length
+    const basicTypes = ['number', 'boolean', 'string', 'function', 'object', 'undefined']
+    let basicType
+    let i
+    let j
+    const typeOfType = typeof type
     if (typeOfType !== 'string' && typeOfType !== 'function') {
       throw new Error('Bad type parameter')
     }
@@ -93,8 +93,8 @@ module.exports = function xdiff_string_diff (oldData, newData, contextLines, min
     }
   }
 
-  var _hasValue = function (array, value) {
-    var i
+  const _hasValue = function (array, value) {
+    let i
     _verifyType(Array, array)
 
     for (i = 0; i < array.length; i++) {
@@ -106,14 +106,14 @@ module.exports = function xdiff_string_diff (oldData, newData, contextLines, min
     return false
   }
 
-  var _areTypeOf = function (type) {
-    var args = arguments
-    var argsLen = arguments.length
-    var basicTypes = ['number', 'boolean', 'string', 'function', 'object', 'undefined']
-    var basicType
-    var i
-    var j
-    var typeOfType = typeof type
+  const _areTypeOf = function (type) {
+    const args = arguments
+    const argsLen = arguments.length
+    const basicTypes = ['number', 'boolean', 'string', 'function', 'object', 'undefined']
+    let basicType
+    let i
+    let j
+    const typeOfType = typeof type
 
     if (typeOfType !== 'string' && typeOfType !== 'function') {
       throw new Error('Bad type parameter')
@@ -157,9 +157,9 @@ module.exports = function xdiff_string_diff (oldData, newData, contextLines, min
     return true
   }
 
-  var _getInitializedArray = function (arraySize, initValue) {
-    var array = []
-    var i
+  const _getInitializedArray = function (arraySize, initValue) {
+    const array = []
+    let i
     _verifyType('number', arraySize)
 
     for (i = 0; i < arraySize; i++) {
@@ -169,7 +169,7 @@ module.exports = function xdiff_string_diff (oldData, newData, contextLines, min
     return array
   }
 
-  var _splitIntoLines = function (text) {
+  const _splitIntoLines = function (text) {
     _verifyType('string', text)
 
     if (text === '') {
@@ -178,15 +178,15 @@ module.exports = function xdiff_string_diff (oldData, newData, contextLines, min
     return text.split('\n')
   }
 
-  var _isEmptyArray = function (obj) {
+  const _isEmptyArray = function (obj) {
     return _areTypeOf(Array, obj) && obj.length === 0
   }
 
   /**
    * Finds longest common sequence between two sequences
-   * @see {@link http://wordaligned.org/articles/longest-common-subsequence}
+   * @see {@link https://wordaligned.org/articles/longest-common-subsequence}
    */
-  var _findLongestCommonSequence = function (seq1, seq2, seq1IsInLcs, seq2IsInLcs) {
+  const _findLongestCommonSequence = function (seq1, seq2, seq1IsInLcs, seq2IsInLcs) {
     if (!_areTypeOf(Array, seq1, seq2)) {
       throw new Error('Array parameters are required')
     }
@@ -197,11 +197,11 @@ module.exports = function xdiff_string_diff (oldData, newData, contextLines, min
     }
 
     // Function to calculate lcs lengths
-    var lcsLens = function (xs, ys) {
-      var i
-      var j
-      var prev
-      var curr = _getInitializedArray(ys.length + 1, 0)
+    const lcsLens = function (xs, ys) {
+      let i
+      let j
+      let prev
+      const curr = _getInitializedArray(ys.length + 1, 0)
 
       for (i = 0; i < xs.length; i++) {
         prev = curr.slice(0)
@@ -218,18 +218,18 @@ module.exports = function xdiff_string_diff (oldData, newData, contextLines, min
     }
 
     // Function to find lcs and fill in the array to indicate the optimal longest common sequence
-    var _findLcs = function (xs, xidx, xIsIn, ys) {
-      var i
-      var xb
-      var xe
-      var llB
-      var llE
-      var pivot
-      var max
-      var yb
-      var ye
-      var nx = xs.length
-      var ny = ys.length
+    const _findLcs = function (xs, xidx, xIsIn, ys) {
+      let i
+      let xb
+      let xe
+      let llB
+      let llE
+      let pivot
+      let max
+      let yb
+      let ye
+      const nx = xs.length
+      const ny = ys.length
 
       if (nx === 0) {
         return []
@@ -245,9 +245,7 @@ module.exports = function xdiff_string_diff (oldData, newData, contextLines, min
       xb = xs.slice(0, i)
       xe = xs.slice(i)
       llB = lcsLens(xb, ys)
-      llE = lcsLens(xe.slice(0)
-        .reverse(), ys.slice(0)
-        .reverse())
+      llE = lcsLens(xe.slice(0).reverse(), ys.slice(0).reverse())
 
       pivot = 0
       max = 0
@@ -278,35 +276,33 @@ module.exports = function xdiff_string_diff (oldData, newData, contextLines, min
     return ''
   }
 
-  if (typeof contextLines !== 'number' ||
-    contextLines > MAX_CONTEXT_LINES ||
-    contextLines < MIN_CONTEXT_LINES) {
+  if (typeof contextLines !== 'number' || contextLines > MAX_CONTEXT_LINES || contextLines < MIN_CONTEXT_LINES) {
     contextLines = DEFAULT_CONTEXT_LINES
   }
 
   oriLines = _splitIntoLines(oldData)
   newLines = _splitIntoLines(newData)
-  var oriLen = oriLines.length
-  var newLen = newLines.length
-  var oriIsInLcs = _getInitializedArray(oriLen, false)
-  var newIsInLcs = _getInitializedArray(newLen, false)
-  var lcsLen = _findLongestCommonSequence(oriLines, newLines, oriIsInLcs, newIsInLcs).length
-  var unidiff = ''
+  const oriLen = oriLines.length
+  const newLen = newLines.length
+  const oriIsInLcs = _getInitializedArray(oriLen, false)
+  const newIsInLcs = _getInitializedArray(newLen, false)
+  const lcsLen = _findLongestCommonSequence(oriLines, newLines, oriIsInLcs, newIsInLcs).length
+  let unidiff = ''
 
   if (lcsLen === 0) {
     // No common sequence
     unidiff = [
       HEADER_PREFIX,
       ORIGINAL_INDICATOR,
-      (oriLen > 0 ? '1' : '0'),
+      oriLen > 0 ? '1' : '0',
       RANGE_SEPARATOR,
       oriLen,
       ' ',
       NEW_INDICATOR,
-      (newLen > 0 ? '1' : '0'),
+      newLen > 0 ? '1' : '0',
       RANGE_SEPARATOR,
       newLen,
-      HEADER_SUFFIX
+      HEADER_SUFFIX,
     ].join('')
 
     for (i = 0; i < oriLen; i++) {
@@ -320,24 +316,24 @@ module.exports = function xdiff_string_diff (oldData, newData, contextLines, min
     return unidiff
   }
 
-  var leadingContext = []
-  var trailingContext = []
-  var actualLeadingContext = []
-  var actualTrailingContext = []
+  let leadingContext = []
+  let trailingContext = []
+  let actualLeadingContext = []
+  let actualTrailingContext = []
 
   // Regularize leading context by the contextLines parameter
-  var regularizeLeadingContext = function (context) {
+  const regularizeLeadingContext = function (context) {
     if (context.length === 0 || contextLines === 0) {
       return []
     }
 
-    var contextStartPos = Math.max(context.length - contextLines, 0)
+    const contextStartPos = Math.max(context.length - contextLines, 0)
 
     return context.slice(contextStartPos)
   }
 
   // Regularize trailing context by the contextLines parameter
-  var regularizeTrailingContext = function (context) {
+  const regularizeTrailingContext = function (context) {
     if (context.length === 0 || contextLines === 0) {
       return []
     }
@@ -379,8 +375,10 @@ module.exports = function xdiff_string_diff (oldData, newData, contextLines, min
       j++
     }
 
-    if (k >= lcsLen || // No more in longest common lines
-      trailingContext.length >= 2 * contextLines) {
+    if (
+      k >= lcsLen || // No more in longest common lines
+      trailingContext.length >= 2 * contextLines
+    ) {
       // Context break found
       if (trailingContext.length < 2 * contextLines) {
         // It must be last block of common lines but not a context break
@@ -424,14 +422,12 @@ module.exports = function xdiff_string_diff (oldData, newData, contextLines, min
         RANGE_SEPARATOR,
         newHunkSize,
         HEADER_SUFFIX,
-        NEW_LINE
+        NEW_LINE,
       ].join('')
 
       // Build the diff hunk content
       while (oriHunkStart < oriHunkEnd || newHunkStart < newHunkEnd) {
-        if (oriHunkStart < oriHunkEnd &&
-          oriIsInLcs[oriHunkStart] === true &&
-          newIsInLcs[newHunkStart] === true) {
+        if (oriHunkStart < oriHunkEnd && oriIsInLcs[oriHunkStart] === true && newIsInLcs[newHunkStart] === true) {
           // The context line
           unidiff += CONTEXT_INDICATOR + oriLines[oriHunkStart] + NEW_LINE
           oriHunkStart++

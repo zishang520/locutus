@@ -1,9 +1,9 @@
-module.exports = function gettype (mixedVar) {
-  //  discuss at: http://locutus.io/php/gettype/
+module.exports = function gettype(mixedVar) {
+  //  discuss at: https://locutus.io/php/gettype/
   // original by: Paulo Freitas
-  // improved by: Kevin van Zonneveld (http://kvz.io)
-  // improved by: Douglas Crockford (http://javascript.crockford.com)
-  // improved by: Brett Zamir (http://brett-zamir.me)
+  // improved by: Kevin van Zonneveld (https://kvz.io)
+  // improved by: Douglas Crockford (https://javascript.crockford.com)
+  // improved by: Brett Zamir (https://brett-zamir.me)
   //    input by: KELAN
   //      note 1: 1.0 is simplified to 1 before it can be accessed by the function, this makes
   //      note 1: it different from the PHP implementation. We can't fix this unfortunately.
@@ -22,12 +22,12 @@ module.exports = function gettype (mixedVar) {
   //   example 7: gettype(['test'])
   //   returns 7: 'array'
 
-  var isFloat = require('../var/is_float')
+  const isFloat = require('../var/is_float')
 
-  var s = typeof mixedVar
-  var name
-  var _getFuncName = function (fn) {
-    var name = (/\W*function\s+([\w$]+)\s*\(/).exec(fn)
+  let s = typeof mixedVar
+  let name
+  const _getFuncName = function (fn) {
+    const name = /\W*function\s+([\w$]+)\s*\(/.exec(fn)
     if (!name) {
       return '(Anonymous)'
     }
@@ -36,11 +36,13 @@ module.exports = function gettype (mixedVar) {
 
   if (s === 'object') {
     if (mixedVar !== null) {
-      // From: http://javascript.crockford.com/remedial.html
+      // From: https://javascript.crockford.com/remedial.html
       // @todo: Break up this lengthy if statement
-      if (typeof mixedVar.length === 'number' &&
-        !(mixedVar.propertyIsEnumerable('length')) &&
-        typeof mixedVar.splice === 'function') {
+      if (
+        typeof mixedVar.length === 'number' &&
+        !mixedVar.propertyIsEnumerable('length') &&
+        typeof mixedVar.splice === 'function'
+      ) {
         s = 'array'
       } else if (mixedVar.constructor && _getFuncName(mixedVar.constructor)) {
         name = _getFuncName(mixedVar.constructor)

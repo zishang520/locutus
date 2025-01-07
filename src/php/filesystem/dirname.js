@@ -1,7 +1,7 @@
-module.exports = function dirname (path) {
-  //  discuss at: http://locutus.io/php/dirname/
+module.exports = function dirname(path) {
+  //  discuss at: https://locutus.io/php/dirname/
   // original by: Ozh
-  // improved by: XoraX (http://www.xorax.info)
+  // improved by: XoraX (https://www.xorax.info)
   //   example 1: dirname('/etc/passwd')
   //   returns 1: '/etc'
   //   example 2: dirname('c:/Temp/x')
@@ -9,6 +9,5 @@ module.exports = function dirname (path) {
   //   example 3: dirname('/dir/test/')
   //   returns 3: '/dir'
 
-  return path.replace(/\\/g, '/')
-    .replace(/\/[^/]*\/?$/, '')
+  return path.replace(/\\/g, '/').replace(/\/[^/]*\/?$/, '')
 }

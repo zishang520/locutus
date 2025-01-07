@@ -1,11 +1,11 @@
-module.exports = function levenshtein (s1, s2, costIns, costRep, costDel) {
-  //       discuss at: http://locutus.io/php/levenshtein/
-  //      original by: Carlos R. L. Rodrigues (http://www.jsfromhell.com)
+module.exports = function levenshtein(s1, s2, costIns, costRep, costDel) {
+  //       discuss at: https://locutus.io/php/levenshtein/
+  //      original by: Carlos R. L. Rodrigues (https://www.jsfromhell.com)
   //      bugfixed by: Onno Marsman (https://twitter.com/onnomarsman)
-  //       revised by: Andrea Giammarchi (http://webreflection.blogspot.com)
-  // reimplemented by: Brett Zamir (http://brett-zamir.me)
+  //       revised by: Andrea Giammarchi (https://webreflection.blogspot.com)
+  // reimplemented by: Brett Zamir (https://brett-zamir.me)
   // reimplemented by: Alexander M Beedie
-  // reimplemented by: Rafał Kukawski (http://blog.kukawski.pl)
+  // reimplemented by: Rafał Kukawski (https://blog.kukawski.pl)
   //        example 1: levenshtein('Kevin van Zonneveld', 'Kevin van Sommeveld')
   //        returns 1: 3
   //        example 2: levenshtein("carrrot", "carrots")
@@ -23,8 +23,8 @@ module.exports = function levenshtein (s1, s2, costIns, costRep, costDel) {
     return 0
   }
 
-  var l1 = s1.length
-  var l2 = s2.length
+  const l1 = s1.length
+  const l2 = s2.length
 
   if (l1 === 0) {
     return l2 * costIns
@@ -38,9 +38,9 @@ module.exports = function levenshtein (s1, s2, costIns, costRep, costDel) {
   //   return -1;
   // }
 
-  var split = false
+  let split = false
   try {
-    split = !('0')[0]
+    split = !'0'[0]
   } catch (e) {
     // Earlier IE may not support access by string index
     split = true
@@ -51,10 +51,10 @@ module.exports = function levenshtein (s1, s2, costIns, costRep, costDel) {
     s2 = s2.split('')
   }
 
-  var p1 = new Array(l2 + 1)
-  var p2 = new Array(l2 + 1)
+  let p1 = new Array(l2 + 1)
+  let p2 = new Array(l2 + 1)
 
-  var i1, i2, c0, c1, c2, tmp
+  let i1, i2, c0, c1, c2, tmp
 
   for (i2 = 0; i2 <= l2; i2++) {
     p1[i2] = i2 * costIns
@@ -64,7 +64,7 @@ module.exports = function levenshtein (s1, s2, costIns, costRep, costDel) {
     p2[0] = p1[0] + costDel
 
     for (i2 = 0; i2 < l2; i2++) {
-      c0 = p1[i2] + ((s1[i1] === s2[i2]) ? 0 : costRep)
+      c0 = p1[i2] + (s1[i1] === s2[i2] ? 0 : costRep)
       c1 = p1[i2 + 1] + costDel
 
       if (c1 < c0) {

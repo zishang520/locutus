@@ -1,15 +1,15 @@
-module.exports = function get_html_translation_table (table, quoteStyle) { // eslint-disable-line camelcase
-  //  discuss at: http://locutus.io/php/get_html_translation_table/
+module.exports = function get_html_translation_table(table, quoteStyle) {
+  //  discuss at: https://locutus.io/php/get_html_translation_table/
   // original by: Philip Peterson
-  //  revised by: Kevin van Zonneveld (http://kvz.io)
+  //  revised by: Kevin van Zonneveld (https://kvz.io)
   // bugfixed by: noname
   // bugfixed by: Alex
   // bugfixed by: Marco
   // bugfixed by: madipta
-  // bugfixed by: Brett Zamir (http://brett-zamir.me)
+  // bugfixed by: Brett Zamir (https://brett-zamir.me)
   // bugfixed by: T.Wild
   // improved by: KELAN
-  // improved by: Brett Zamir (http://brett-zamir.me)
+  // improved by: Brett Zamir (https://brett-zamir.me)
   //    input by: Frank Forte
   //    input by: Ratheous
   //      note 1: It has been decided that we're not going to add global
@@ -19,13 +19,13 @@ module.exports = function get_html_translation_table (table, quoteStyle) { // es
   //   example 1: get_html_translation_table('HTML_SPECIALCHARS')
   //   returns 1: {'"': '&quot;', '&': '&amp;', '<': '&lt;', '>': '&gt;'}
 
-  var entities = {}
-  var hashMap = {}
-  var decimal
-  var constMappingTable = {}
-  var constMappingQuoteStyle = {}
-  var useTable = {}
-  var useQuoteStyle = {}
+  const entities = {}
+  const hashMap = {}
+  let decimal
+  const constMappingTable = {}
+  const constMappingQuoteStyle = {}
+  let useTable = {}
+  let useQuoteStyle = {}
 
   // Translate arguments
   constMappingTable[0] = 'HTML_SPECIALCHARS'
@@ -34,11 +34,7 @@ module.exports = function get_html_translation_table (table, quoteStyle) { // es
   constMappingQuoteStyle[2] = 'ENT_COMPAT'
   constMappingQuoteStyle[3] = 'ENT_QUOTES'
 
-  useTable = !isNaN(table)
-    ? constMappingTable[table]
-    : table
-      ? table.toUpperCase()
-      : 'HTML_SPECIALCHARS'
+  useTable = !isNaN(table) ? constMappingTable[table] : table ? table.toUpperCase() : 'HTML_SPECIALCHARS'
 
   useQuoteStyle = !isNaN(quoteStyle)
     ? constMappingQuoteStyle[quoteStyle]

@@ -1,7 +1,7 @@
-module.exports = function get_defined_functions () { // eslint-disable-line camelcase
-  //  discuss at: http://locutus.io/php/get_defined_functions/
-  // original by: Brett Zamir (http://brett-zamir.me)
-  // improved by: Brett Zamir (http://brett-zamir.me)
+module.exports = function get_defined_functions() {
+  //  discuss at: https://locutus.io/php/get_defined_functions/
+  // original by: Brett Zamir (https://brett-zamir.me)
+  // improved by: Brett Zamir (https://brett-zamir.me)
   //      note 1: Test case 1: If get_defined_functions can find
   //      note 1: itself in the defined functions, it worked :)
   //   example 1: function test_in_array (array, p_val) {for(var i = 0, l = array.length; i < l; i++) {if (array[i] === p_val) return true} return false}
@@ -11,14 +11,14 @@ module.exports = function get_defined_functions () { // eslint-disable-line came
   //   returns 1: true
   //        test: skip-1
 
-  var $global = (typeof window !== 'undefined' ? window : global)
+  const $global = typeof window !== 'undefined' ? window : global
   $global.$locutus = $global.$locutus || {}
-  var $locutus = $global.$locutus
+  const $locutus = $global.$locutus
   $locutus.php = $locutus.php || {}
 
-  var i = ''
-  var arr = []
-  var already = {}
+  let i = ''
+  const arr = []
+  const already = {}
 
   for (i in $global) {
     try {
@@ -28,7 +28,7 @@ module.exports = function get_defined_functions () { // eslint-disable-line came
           arr.push(i)
         }
       } else if (typeof $global[i] === 'object') {
-        for (var j in $global[i]) {
+        for (const j in $global[i]) {
           if (typeof $global[j] === 'function' && $global[j] && !already[j]) {
             already[j] = 1
             arr.push(j)

@@ -1,15 +1,15 @@
-module.exports = function convert_uuencode (str) { // eslint-disable-line camelcase
-  //       discuss at: http://locutus.io/php/convert_uuencode/
+module.exports = function convert_uuencode(str) {
+  //       discuss at: https://locutus.io/php/convert_uuencode/
   //      original by: Ole Vrijenhoek
-  //      bugfixed by: Kevin van Zonneveld (http://kvz.io)
-  //      bugfixed by: Brett Zamir (http://brett-zamir.me)
+  //      bugfixed by: Kevin van Zonneveld (https://kvz.io)
+  //      bugfixed by: Brett Zamir (https://brett-zamir.me)
   // reimplemented by: Ole Vrijenhoek
   //        example 1: convert_uuencode("test\ntext text\r\n")
   //        returns 1: "0=&5S=`IT97AT('1E>'0-\"@\n`\n"
 
-  var isScalar = require('../var/is_scalar')
+  const isScalar = require('../var/is_scalar')
 
-  var chr = function (c) {
+  const chr = function (c) {
     return String.fromCharCode(c)
   }
 
@@ -19,17 +19,17 @@ module.exports = function convert_uuencode (str) { // eslint-disable-line camelc
     return false
   }
 
-  var c = 0
-  var u = 0
-  var i = 0
-  var a = 0
-  var encoded = ''
-  var tmp1 = ''
-  var tmp2 = ''
-  var bytes = {}
+  let c = 0
+  let u = 0
+  let i = 0
+  let a = 0
+  let encoded = ''
+  let tmp1 = ''
+  let tmp2 = ''
+  let bytes = {}
 
   // divide string into chunks of 45 characters
-  var chunk = function () {
+  const chunk = function () {
     bytes = str.substr(u, 45).split('')
     for (i in bytes) {
       bytes[i] = bytes[i].charCodeAt(0)
@@ -56,7 +56,7 @@ module.exports = function convert_uuencode (str) { // eslint-disable-line camelc
       tmp2 = tmp2 + '0'
     }
 
-    for (i = 0; i <= (tmp2.length / 6) - 1; i++) {
+    for (i = 0; i <= tmp2.length / 6 - 1; i++) {
       tmp1 = tmp2.substr(a, 6)
       if (tmp1 === '000000') {
         encoded += chr(96)

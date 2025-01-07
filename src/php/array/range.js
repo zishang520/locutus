@@ -1,6 +1,6 @@
-module.exports = function range (low, high, step) {
-  //  discuss at: http://locutus.io/php/range/
-  // original by: Waldo Malqui Silva (http://waldo.malqui.info)
+module.exports = function range(low, high, step) {
+  //  discuss at: https://locutus.io/php/range/
+  // original by: Waldo Malqui Silva (https://waldo.malqui.info)
   //   example 1: range ( 0, 12 )
   //   returns 1: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
   //   example 2: range( 0, 100, 10 )
@@ -10,12 +10,12 @@ module.exports = function range (low, high, step) {
   //   example 4: range( 'c', 'a' )
   //   returns 4: ['c', 'b', 'a']
 
-  var matrix = []
-  var iVal
-  var endval
-  var plus
-  var walker = step || 1
-  var chars = false
+  const matrix = []
+  let iVal
+  let endval
+  let plus
+  const walker = step || 1
+  let chars = false
 
   if (!isNaN(low) && !isNaN(high)) {
     iVal = low
@@ -25,19 +25,19 @@ module.exports = function range (low, high, step) {
     iVal = low.charCodeAt(0)
     endval = high.charCodeAt(0)
   } else {
-    iVal = (isNaN(low) ? 0 : low)
-    endval = (isNaN(high) ? 0 : high)
+    iVal = isNaN(low) ? 0 : low
+    endval = isNaN(high) ? 0 : high
   }
 
   plus = !(iVal > endval)
   if (plus) {
     while (iVal <= endval) {
-      matrix.push(((chars) ? String.fromCharCode(iVal) : iVal))
+      matrix.push(chars ? String.fromCharCode(iVal) : iVal)
       iVal += walker
     }
   } else {
     while (iVal >= endval) {
-      matrix.push(((chars) ? String.fromCharCode(iVal) : iVal))
+      matrix.push(chars ? String.fromCharCode(iVal) : iVal)
       iVal -= walker
     }
   }

@@ -1,7 +1,7 @@
-module.exports = function uksort (inputArr, sorter) {
-  //  discuss at: http://locutus.io/php/uksort/
-  // original by: Brett Zamir (http://brett-zamir.me)
-  // improved by: Brett Zamir (http://brett-zamir.me)
+module.exports = function uksort(inputArr, sorter) {
+  //  discuss at: https://locutus.io/php/uksort/
+  // original by: Brett Zamir (https://brett-zamir.me)
+  // improved by: Brett Zamir (https://brett-zamir.me)
   //      note 1: The examples are correct, this is a new way
   //      note 1: This function deviates from PHP in returning a copy of the array instead
   //      note 1: of acting by reference and returning true; this was necessary because
@@ -17,12 +17,12 @@ module.exports = function uksort (inputArr, sorter) {
   //   example 1: var $result = $data
   //   returns 1: {a: 'orange', b: 'banana', c: 'apple', d: 'lemon'}
 
-  var tmpArr = {}
-  var keys = []
-  var i = 0
-  var k = ''
-  var sortByReference = false
-  var populateArr = {}
+  const tmpArr = {}
+  const keys = []
+  let i = 0
+  let k = ''
+  let sortByReference = false
+  let populateArr = {}
 
   if (typeof sorter === 'string') {
     sorter = this.window[sorter]
@@ -46,7 +46,8 @@ module.exports = function uksort (inputArr, sorter) {
     return false
   }
 
-  var iniVal = (typeof require !== 'undefined' ? require('../info/ini_get')('locutus.sortByReference') : undefined) || 'on'
+  const iniVal =
+    (typeof require !== 'undefined' ? require('../info/ini_get')('locutus.sortByReference') : undefined) || 'on'
   sortByReference = iniVal === 'on'
   populateArr = sortByReference ? inputArr : populateArr
 

@@ -1,6 +1,6 @@
-module.exports = function array_splice (arr, offst, lgth, replacement) { // eslint-disable-line camelcase
-  //  discuss at: http://locutus.io/php/array_splice/
-  // original by: Brett Zamir (http://brett-zamir.me)
+module.exports = function array_splice(arr, offst, lgth, replacement) {
+  //  discuss at: https://locutus.io/php/array_splice/
+  // original by: Brett Zamir (https://brett-zamir.me)
   //    input by: Theriault (https://github.com/Theriault)
   //      note 1: Order does get shifted in associative array input with numeric indices,
   //      note 1: since PHP behavior doesn't preserve keys, but I understand order is
@@ -20,15 +20,15 @@ module.exports = function array_splice (arr, offst, lgth, replacement) { // esli
   //   returns 3: ["yellow"]
   //        test: skip-1
 
-  var isInt = require('../var/is_int')
+  const isInt = require('../var/is_int')
 
-  var _checkToUpIndices = function (arr, ct, key) {
+  const _checkToUpIndices = function (arr, ct, key) {
     // Deal with situation, e.g., if encounter index 4 and try
     // to set it to 0, but 0 exists later in loop (need to
     // increment all subsequent (skipping current key,
     // since we need its value below) until find unused)
     if (arr[ct] !== undefined) {
-      var tmp = ct
+      const tmp = ct
       ct += 1
       if (ct === key) {
         ct += 1
@@ -54,22 +54,22 @@ module.exports = function array_splice (arr, offst, lgth, replacement) { // esli
      // Deal with array-like objects as input
     delete arr.length;
     } */
-    var lgt = 0
-    var ct = -1
-    var rmvd = []
-    var rmvdObj = {}
-    var replCt = -1
-    var intCt = -1
-    var returnArr = true
-    var rmvdCt = 0
+    let lgt = 0
+    let ct = -1
+    const rmvd = []
+    const rmvdObj = {}
+    let replCt = -1
+    let intCt = -1
+    let returnArr = true
+    let rmvdCt = 0
     // var rmvdLngth = 0
-    var key = ''
+    let key = ''
     // rmvdObj.length = 0;
     for (key in arr) {
       // Can do arr.__count__ in some browsers
       lgt += 1
     }
-    offst = (offst >= 0) ? offst : lgt + offst
+    offst = offst >= 0 ? offst : lgt + offst
     for (key in arr) {
       ct += 1
       if (ct < offst) {

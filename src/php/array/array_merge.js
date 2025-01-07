@@ -1,8 +1,8 @@
-module.exports = function array_merge () { // eslint-disable-line camelcase
-  //  discuss at: http://locutus.io/php/array_merge/
-  // original by: Brett Zamir (http://brett-zamir.me)
+module.exports = function array_merge() {
+  //  discuss at: https://locutus.io/php/array_merge/
+  // original by: Brett Zamir (https://brett-zamir.me)
   // bugfixed by: Nate
-  // bugfixed by: Brett Zamir (http://brett-zamir.me)
+  // bugfixed by: Brett Zamir (https://brett-zamir.me)
   //    input by: josh
   //   example 1: var $arr1 = {"color": "red", 0: 2, 1: 4}
   //   example 1: var $arr2 = {0: "a", 1: "b", "color": "green", "shape": "trapezoid", 2: 4}
@@ -13,17 +13,17 @@ module.exports = function array_merge () { // eslint-disable-line camelcase
   //   example 2: array_merge($arr1, $arr2)
   //   returns 2: {0: "data"}
 
-  var args = Array.prototype.slice.call(arguments)
-  var argl = args.length
-  var arg
-  var retObj = {}
-  var k = ''
-  var argil = 0
-  var j = 0
-  var i = 0
-  var ct = 0
-  var toStr = Object.prototype.toString
-  var retArr = true
+  const args = Array.prototype.slice.call(arguments)
+  const argl = args.length
+  let arg
+  const retObj = {}
+  let k = ''
+  let argil = 0
+  let j = 0
+  let i = 0
+  let ct = 0
+  const toStr = Object.prototype.toString
+  let retArr = true
 
   for (i = 0; i < argl; i++) {
     if (toStr.call(args[i]) !== '[object Array]') {

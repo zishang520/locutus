@@ -1,10 +1,10 @@
-module.exports = function in_array (needle, haystack, argStrict) { // eslint-disable-line camelcase
-  //  discuss at: http://locutus.io/php/in_array/
-  // original by: Kevin van Zonneveld (http://kvz.io)
+module.exports = function in_array(needle, haystack, argStrict) {
+  //  discuss at: https://locutus.io/php/in_array/
+  // original by: Kevin van Zonneveld (https://kvz.io)
   // improved by: vlado houba
   // improved by: Jonas Sciangula Street (Joni2Back)
   //    input by: Billy
-  // bugfixed by: Brett Zamir (http://brett-zamir.me)
+  // bugfixed by: Brett Zamir (https://brett-zamir.me)
   //   example 1: in_array('van', ['Kevin', 'van', 'Zonneveld'])
   //   returns 1: true
   //   example 2: in_array('vlado', {0: 'Kevin', vlado: 'van', 1: 'Zonneveld'})
@@ -16,8 +16,8 @@ module.exports = function in_array (needle, haystack, argStrict) { // eslint-dis
   //   example 4: in_array(1, ['1', '2', '3'], true)
   //   returns 4: false
 
-  var key = ''
-  var strict = !!argStrict
+  let key = ''
+  const strict = !!argStrict
 
   // we prevent the double check (strict && arr[key] === ndl) || (!strict && arr[key] === ndl)
   // in just one for, in order to improve the performance
@@ -30,7 +30,8 @@ module.exports = function in_array (needle, haystack, argStrict) { // eslint-dis
     }
   } else {
     for (key in haystack) {
-      if (haystack[key] == needle) { // eslint-disable-line eqeqeq
+      // eslint-disable-next-line eqeqeq
+      if (haystack[key] == needle) {
         return true
       }
     }

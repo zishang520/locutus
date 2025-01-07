@@ -1,8 +1,8 @@
-module.exports = function chunk_split (body, chunklen, end) { // eslint-disable-line camelcase
-  //  discuss at: http://locutus.io/php/chunk_split/
+module.exports = function chunk_split(body, chunklen, end) {
+  //  discuss at: https://locutus.io/php/chunk_split/
   // original by: Paulo Freitas
-  //    input by: Brett Zamir (http://brett-zamir.me)
-  // bugfixed by: Kevin van Zonneveld (http://kvz.io)
+  //    input by: Brett Zamir (https://brett-zamir.me)
+  // bugfixed by: Kevin van Zonneveld (https://kvz.io)
   // improved by: Theriault (https://github.com/Theriault)
   //   example 1: chunk_split('Hello world!', 1, '*')
   //   returns 1: 'H*e*l*l*o* *w*o*r*l*d*!*'
@@ -16,6 +16,5 @@ module.exports = function chunk_split (body, chunklen, end) { // eslint-disable-
     return false
   }
 
-  return body.match(new RegExp('.{0,' + chunklen + '}', 'g'))
-    .join(end)
+  return body.match(new RegExp('.{0,' + chunklen + '}', 'g')).join(end)
 }

@@ -1,12 +1,12 @@
-module.exports = function is_numeric (mixedVar) { // eslint-disable-line camelcase
-  //  discuss at: http://locutus.io/php/is_numeric/
-  // original by: Kevin van Zonneveld (http://kvz.io)
+module.exports = function is_numeric(mixedVar) {
+  //  discuss at: https://locutus.io/php/is_numeric/
+  // original by: Kevin van Zonneveld (https://kvz.io)
   // improved by: David
   // improved by: taith
   // bugfixed by: Tim de Koning
-  // bugfixed by: WebDevHobo (http://webdevhobo.blogspot.com/)
-  // bugfixed by: Brett Zamir (http://brett-zamir.me)
-  // bugfixed by: Denis Chenu (http://shnoulle.net)
+  // bugfixed by: WebDevHobo (https://webdevhobo.blogspot.com/)
+  // bugfixed by: Brett Zamir (https://brett-zamir.me)
+  // bugfixed by: Denis Chenu (https://shnoulle.net)
   //   example 1: is_numeric(186.31)
   //   returns 1: true
   //   example 2: is_numeric('Kevin van Zonneveld')
@@ -20,7 +20,7 @@ module.exports = function is_numeric (mixedVar) { // eslint-disable-line camelca
   //   example 6: is_numeric('1 ')
   //   returns 6: false
 
-  var whitespace = [
+  const whitespace = [
     ' ',
     '\n',
     '\r',
@@ -42,13 +42,13 @@ module.exports = function is_numeric (mixedVar) { // eslint-disable-line camelca
     '\u200b',
     '\u2028',
     '\u2029',
-    '\u3000'
+    '\u3000',
   ].join('')
 
   // @todo: Break this up using many single conditions with early returns
-  return (typeof mixedVar === 'number' ||
-    (typeof mixedVar === 'string' &&
-    whitespace.indexOf(mixedVar.slice(-1)) === -1)) &&
+  return (
+    (typeof mixedVar === 'number' || (typeof mixedVar === 'string' && whitespace.indexOf(mixedVar.slice(-1)) === -1)) &&
     mixedVar !== '' &&
     !isNaN(mixedVar)
+  )
 }

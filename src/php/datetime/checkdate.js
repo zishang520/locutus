@@ -1,6 +1,6 @@
-module.exports = function checkdate (m, d, y) {
-  //  discuss at: http://locutus.io/php/checkdate/
-  // original by: Kevin van Zonneveld (http://kvz.io)
+module.exports = function checkdate(m, d, y) {
+  //  discuss at: https://locutus.io/php/checkdate/
+  // original by: Kevin van Zonneveld (https://kvz.io)
   // improved by: Pyerre
   // improved by: Theriault (https://github.com/Theriault)
   //   example 1: checkdate(12, 31, 2000)
@@ -12,6 +12,5 @@ module.exports = function checkdate (m, d, y) {
   //   example 4: checkdate(1, 390, 2000)
   //   returns 4: false
 
-  return m > 0 && m < 13 && y > 0 && y < 32768 && d > 0 && d <= (new Date(y, m, 0))
-    .getDate()
+  return m > 0 && m < 13 && y > 0 && y < 32768 && d > 0 && d <= new Date(y, m, 0).getDate()
 }

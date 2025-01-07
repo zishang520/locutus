@@ -1,6 +1,6 @@
-module.exports = function addcslashes (str, charlist) {
-  //  discuss at: http://locutus.io/php/addcslashes/
-  // original by: Brett Zamir (http://brett-zamir.me)
+module.exports = function addcslashes(str, charlist) {
+  //  discuss at: https://locutus.io/php/addcslashes/
+  // original by: Brett Zamir (https://brett-zamir.me)
   //      note 1: We show double backslashes in the return value example
   //      note 1: code below because a JavaScript string will not
   //      note 1: render them as backslashes otherwise
@@ -17,25 +17,25 @@ module.exports = function addcslashes (str, charlist) {
   //   _example 6: addcslashes("\r\u0007\n", '\0'); // Do not recognize C escape sequences if not specified
   //   _returns 6: "\r\u0007\n"
 
-  var target = ''
-  var chrs = []
-  var i = 0
-  var j = 0
-  var c = ''
-  var next = ''
-  var rangeBegin = ''
-  var rangeEnd = ''
-  var chr = ''
-  var begin = 0
-  var end = 0
-  var octalLength = 0
-  var postOctalPos = 0
-  var cca = 0
-  var escHexGrp = []
-  var encoded = ''
-  var percentHex = /%([\dA-Fa-f]+)/g
+  let target = ''
+  const chrs = []
+  let i = 0
+  let j = 0
+  let c = ''
+  let next = ''
+  let rangeBegin = ''
+  let rangeEnd = ''
+  let chr = ''
+  let begin = 0
+  let end = 0
+  let octalLength = 0
+  let postOctalPos = 0
+  let cca = 0
+  let escHexGrp = []
+  let encoded = ''
+  const percentHex = /%([\dA-Fa-f]+)/g
 
-  var _pad = function (n, c) {
+  const _pad = function (n, c) {
     if ((n = n + '').length < c) {
       return new Array(++c - n.length).join('0') + n
     }
@@ -45,7 +45,7 @@ module.exports = function addcslashes (str, charlist) {
   for (i = 0; i < charlist.length; i++) {
     c = charlist.charAt(i)
     next = charlist.charAt(i + 1)
-    if (c === '\\' && next && (/\d/).test(next)) {
+    if (c === '\\' && next && /\d/.test(next)) {
       // Octal
       rangeBegin = charlist.slice(i + 1).match(/^\d+/)[0]
       octalLength = rangeBegin.length
@@ -53,7 +53,7 @@ module.exports = function addcslashes (str, charlist) {
       if (charlist.charAt(postOctalPos) + charlist.charAt(postOctalPos + 1) === '..') {
         // Octal begins range
         begin = rangeBegin.charCodeAt(0)
-        if ((/\\\d/).test(charlist.charAt(postOctalPos + 2) + charlist.charAt(postOctalPos + 3))) {
+        if (/\\\d/.test(charlist.charAt(postOctalPos + 2) + charlist.charAt(postOctalPos + 3))) {
           // Range ends with octal
           rangeEnd = charlist.slice(postOctalPos + 3).match(/^\d+/)[0]
           // Skip range end backslash
@@ -87,7 +87,7 @@ module.exports = function addcslashes (str, charlist) {
       // Character begins range
       rangeBegin = c
       begin = rangeBegin.charCodeAt(0)
-      if ((/\\\d/).test(charlist.charAt(i + 3) + charlist.charAt(i + 4))) {
+      if (/\\\d/.test(charlist.charAt(i + 3) + charlist.charAt(i + 4))) {
         // Range ends with octal
         rangeEnd = charlist.slice(i + 4).match(/^\d+/)[0]
         // Skip range end backslash

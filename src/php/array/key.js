@@ -1,22 +1,22 @@
-module.exports = function key (arr) {
-  //  discuss at: http://locutus.io/php/key/
-  // original by: Brett Zamir (http://brett-zamir.me)
-  //    input by: Riddler (http://www.frontierwebdev.com/)
-  // bugfixed by: Brett Zamir (http://brett-zamir.me)
+module.exports = function key(arr) {
+  //  discuss at: https://locutus.io/php/key/
+  // original by: Brett Zamir (https://brett-zamir.me)
+  //    input by: Riddler (https://www.frontierwebdev.com/)
+  // bugfixed by: Brett Zamir (https://brett-zamir.me)
   //      note 1: Uses global: locutus to store the array pointer
   //   example 1: var $array = {fruit1: 'apple', 'fruit2': 'orange'}
   //   example 1: key($array)
   //   returns 1: 'fruit1'
 
-  var $global = (typeof window !== 'undefined' ? window : global)
+  const $global = typeof window !== 'undefined' ? window : global
   $global.$locutus = $global.$locutus || {}
-  var $locutus = $global.$locutus
+  const $locutus = $global.$locutus
   $locutus.php = $locutus.php || {}
   $locutus.php.pointers = $locutus.php.pointers || []
-  var pointers = $locutus.php.pointers
+  const pointers = $locutus.php.pointers
 
-  var indexOf = function (value) {
-    for (var i = 0, length = this.length; i < length; i++) {
+  const indexOf = function (value) {
+    for (let i = 0, length = this.length; i < length; i++) {
       if (this[i] === value) {
         return i
       }
@@ -31,10 +31,10 @@ module.exports = function key (arr) {
   if (pointers.indexOf(arr) === -1) {
     pointers.push(arr, 0)
   }
-  var cursor = pointers[pointers.indexOf(arr) + 1]
+  const cursor = pointers[pointers.indexOf(arr) + 1]
   if (Object.prototype.toString.call(arr) !== '[object Array]') {
-    var ct = 0
-    for (var k in arr) {
+    let ct = 0
+    for (const k in arr) {
       if (ct === cursor) {
         return k
       }

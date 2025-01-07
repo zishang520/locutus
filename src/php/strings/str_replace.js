@@ -1,20 +1,21 @@
-module.exports = function str_replace (search, replace, subject, countObj) { // eslint-disable-line camelcase
-  //  discuss at: http://locutus.io/php/str_replace/
-  // original by: Kevin van Zonneveld (http://kvz.io)
+module.exports = function str_replace(search, replace, subject, countObj) {
+  //  discuss at: https://locutus.io/php/str_replace/
+  // original by: Kevin van Zonneveld (https://kvz.io)
   // improved by: Gabriel Paderni
   // improved by: Philip Peterson
-  // improved by: Simon Willison (http://simonwillison.net)
-  // improved by: Kevin van Zonneveld (http://kvz.io)
+  // improved by: Simon Willison (https://simonwillison.net)
+  // improved by: Kevin van Zonneveld (https://kvz.io)
   // improved by: Onno Marsman (https://twitter.com/onnomarsman)
-  // improved by: Brett Zamir (http://brett-zamir.me)
-  //  revised by: Jonas Raoni Soares Silva (http://www.jsfromhell.com)
+  // improved by: Brett Zamir (https://brett-zamir.me)
+  //  revised by: Jonas Raoni Soares Silva (https://www.jsfromhell.com)
   // bugfixed by: Anton Ongson
-  // bugfixed by: Kevin van Zonneveld (http://kvz.io)
+  // bugfixed by: Kevin van Zonneveld (https://kvz.io)
   // bugfixed by: Oleg Eremeev
-  // bugfixed by: Glen Arason (http://CanadianDomainRegistry.ca)
-  // bugfixed by: Glen Arason (http://CanadianDomainRegistry.ca)
+  // bugfixed by: Glen Arason (https://CanadianDomainRegistry.ca)
+  // bugfixed by: Glen Arason (https://CanadianDomainRegistry.ca)
+  // bugfixed by: Mahmoud Saeed
   //    input by: Onno Marsman (https://twitter.com/onnomarsman)
-  //    input by: Brett Zamir (http://brett-zamir.me)
+  //    input by: Brett Zamir (https://brett-zamir.me)
   //    input by: Oleg Eremeev
   //      note 1: The countObj parameter (optional) if used must be passed in as a
   //      note 1: object. The count will then be written by reference into it's `value` property
@@ -28,26 +29,28 @@ module.exports = function str_replace (search, replace, subject, countObj) { // 
   //   example 4: str_replace(['A','D'], ['x','y'] , 'ASDFASDF' , countObj)
   //   example 4: var $result = countObj.value
   //   returns 4: 4
+  //   example 5: str_replace('', '.', 'aaa')
+  //   returns 5: 'aaa'
 
-  var i = 0
-  var j = 0
-  var temp = ''
-  var repl = ''
-  var sl = 0
-  var fl = 0
-  var f = [].concat(search)
-  var r = [].concat(replace)
-  var s = subject
-  var ra = Object.prototype.toString.call(r) === '[object Array]'
-  var sa = Object.prototype.toString.call(s) === '[object Array]'
+  let i = 0
+  let j = 0
+  let temp = ''
+  let repl = ''
+  let sl = 0
+  let fl = 0
+  const f = [].concat(search)
+  let r = [].concat(replace)
+  let s = subject
+  let ra = Object.prototype.toString.call(r) === '[object Array]'
+  const sa = Object.prototype.toString.call(s) === '[object Array]'
   s = [].concat(s)
 
-  var $global = (typeof window !== 'undefined' ? window : global)
+  const $global = typeof window !== 'undefined' ? window : global
   $global.$locutus = $global.$locutus || {}
-  var $locutus = $global.$locutus
+  const $locutus = $global.$locutus
   $locutus.php = $locutus.php || {}
 
-  if (typeof (search) === 'object' && typeof (replace) === 'string') {
+  if (typeof search === 'object' && typeof replace === 'string') {
     temp = replace
     replace = []
     for (i = 0; i < search.length; i += 1) {
@@ -67,11 +70,14 @@ module.exports = function str_replace (search, replace, subject, countObj) { // 
       continue
     }
     for (j = 0, fl = f.length; j < fl; j++) {
+      if (f[j] === '') {
+        continue
+      }
       temp = s[i] + ''
       repl = ra ? (r[j] !== undefined ? r[j] : '') : r[0]
-      s[i] = (temp).split(f[j]).join(repl)
+      s[i] = temp.split(f[j]).join(repl)
       if (typeof countObj !== 'undefined') {
-        countObj.value += ((temp.split(f[j])).length - 1)
+        countObj.value += temp.split(f[j]).length - 1
       }
     }
   }

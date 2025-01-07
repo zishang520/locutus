@@ -1,11 +1,11 @@
-module.exports = function array_count_values (array) { // eslint-disable-line camelcase
-  //  discuss at: http://locutus.io/php/array_count_values/
-  // original by: Ates Goral (http://magnetiq.com)
-  // improved by: Michael White (http://getsprink.com)
-  // improved by: Kevin van Zonneveld (http://kvz.io)
+module.exports = function array_count_values(array) {
+  //  discuss at: https://locutus.io/php/array_count_values/
+  // original by: Ates Goral (https://magnetiq.com)
+  // improved by: Michael White (https://getsprink.com)
+  // improved by: Kevin van Zonneveld (https://kvz.io)
   //    input by: sankai
   //    input by: Shingo
-  // bugfixed by: Brett Zamir (http://brett-zamir.me)
+  // bugfixed by: Brett Zamir (https://brett-zamir.me)
   //   example 1: array_count_values([ 3, 5, 3, "foo", "bar", "foo" ])
   //   returns 1: {3:2, 5:1, "foo":2, "bar":1}
   //   example 2: array_count_values({ p1: 3, p2: 5, p3: 3, p4: "foo", p5: "bar", p6: "foo" })
@@ -13,13 +13,13 @@ module.exports = function array_count_values (array) { // eslint-disable-line ca
   //   example 3: array_count_values([ true, 4.2, 42, "fubar" ])
   //   returns 3: {42:1, "fubar":1}
 
-  var tmpArr = {}
-  var key = ''
-  var t = ''
+  const tmpArr = {}
+  let key = ''
+  let t = ''
 
-  var _getType = function (obj) {
+  const _getType = function (obj) {
     // Objects are php associative arrays.
-    var t = typeof obj
+    let t = typeof obj
     t = t.toLowerCase()
     if (t === 'object') {
       t = 'array'
@@ -27,7 +27,7 @@ module.exports = function array_count_values (array) { // eslint-disable-line ca
     return t
   }
 
-  var _countValue = function (tmpArr, value) {
+  const _countValue = function (tmpArr, value) {
     if (typeof value === 'number') {
       if (Math.floor(value) !== value) {
         return

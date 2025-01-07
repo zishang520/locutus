@@ -1,8 +1,8 @@
-module.exports = function array_change_key_case (array, cs) { // eslint-disable-line camelcase
-  //  discuss at: http://locutus.io/php/array_change_key_case/
-  // original by: Ates Goral (http://magnetiq.com)
+module.exports = function array_change_key_case(array, cs) {
+  //  discuss at: https://locutus.io/php/array_change_key_case/
+  // original by: Ates Goral (https://magnetiq.com)
   // improved by: marrtins
-  // improved by: Brett Zamir (http://brett-zamir.me)
+  // improved by: Brett Zamir (https://brett-zamir.me)
   //   example 1: array_change_key_case(42)
   //   returns 1: false
   //   example 2: array_change_key_case([ 3, 5 ])
@@ -16,16 +16,16 @@ module.exports = function array_change_key_case (array, cs) { // eslint-disable-
   //   example 6: array_change_key_case({ FuBaR: 42 }, 2)
   //   returns 6: {"FUBAR": 42}
 
-  var caseFnc
-  var key
-  var tmpArr = {}
+  let caseFnc
+  let key
+  const tmpArr = {}
 
   if (Object.prototype.toString.call(array) === '[object Array]') {
     return array
   }
 
   if (array && typeof array === 'object') {
-    caseFnc = (!cs || cs === 'CASE_LOWER') ? 'toLowerCase' : 'toUpperCase'
+    caseFnc = !cs || cs === 'CASE_LOWER' ? 'toLowerCase' : 'toUpperCase'
     for (key in array) {
       tmpArr[key[caseFnc]()] = array[key]
     }

@@ -1,13 +1,13 @@
-module.exports = function soundex (str) {
-  //  discuss at: http://locutus.io/php/soundex/
-  // original by: Jonas Raoni Soares Silva (http://www.jsfromhell.com)
-  // original by: Arnout Kazemier (http://www.3rd-Eden.com)
+module.exports = function soundex(str) {
+  //  discuss at: https://locutus.io/php/soundex/
+  // original by: Jonas Raoni Soares Silva (https://www.jsfromhell.com)
+  // original by: Arnout Kazemier (https://www.3rd-Eden.com)
   // improved by: Jack
-  // improved by: Kevin van Zonneveld (http://kvz.io)
+  // improved by: Kevin van Zonneveld (https://kvz.io)
   // bugfixed by: Onno Marsman (https://twitter.com/onnomarsman)
-  // bugfixed by: Kevin van Zonneveld (http://kvz.io)
-  //    input by: Brett Zamir (http://brett-zamir.me)
-  //  revised by: Rafał Kukawski (http://blog.kukawski.pl)
+  // bugfixed by: Kevin van Zonneveld (https://kvz.io)
+  //    input by: Brett Zamir (https://brett-zamir.me)
+  //  revised by: Rafał Kukawski (https://blog.kukawski.pl)
   //   example 1: soundex('Kevin')
   //   returns 1: 'K150'
   //   example 2: soundex('Ellery')
@@ -20,8 +20,8 @@ module.exports = function soundex (str) {
     return ''
   }
 
-  var sdx = [0, 0, 0, 0]
-  var m = {
+  const sdx = [0, 0, 0, 0]
+  const m = {
     B: 1,
     F: 1,
     P: 1,
@@ -39,13 +39,13 @@ module.exports = function soundex (str) {
     L: 4,
     M: 5,
     N: 5,
-    R: 6
+    R: 6,
   }
-  var i = 0
-  var j
-  var s = 0
-  var c
-  var p
+  let i = 0
+  let j
+  let s = 0
+  let c
+  let p
 
   while ((c = str.charAt(i++)) && s < 4) {
     if ((j = m[c])) {

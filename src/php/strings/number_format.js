@@ -1,24 +1,24 @@
-module.exports = function number_format (number, decimals, decPoint, thousandsSep) { // eslint-disable-line camelcase
-  //  discuss at: http://locutus.io/php/number_format/
-  // original by: Jonas Raoni Soares Silva (http://www.jsfromhell.com)
-  // improved by: Kevin van Zonneveld (http://kvz.io)
+module.exports = function number_format(number, decimals, decPoint, thousandsSep) {
+  //  discuss at: https://locutus.io/php/number_format/
+  // original by: Jonas Raoni Soares Silva (https://www.jsfromhell.com)
+  // improved by: Kevin van Zonneveld (https://kvz.io)
   // improved by: davook
-  // improved by: Brett Zamir (http://brett-zamir.me)
-  // improved by: Brett Zamir (http://brett-zamir.me)
+  // improved by: Brett Zamir (https://brett-zamir.me)
+  // improved by: Brett Zamir (https://brett-zamir.me)
   // improved by: Theriault (https://github.com/Theriault)
-  // improved by: Kevin van Zonneveld (http://kvz.io)
-  // bugfixed by: Michael White (http://getsprink.com)
+  // improved by: Kevin van Zonneveld (https://kvz.io)
+  // bugfixed by: Michael White (https://getsprink.com)
   // bugfixed by: Benjamin Lupton
-  // bugfixed by: Allan Jensen (http://www.winternet.no)
+  // bugfixed by: Allan Jensen (https://www.winternet.no)
   // bugfixed by: Howard Yeend
   // bugfixed by: Diogo Resende
   // bugfixed by: Rival
-  // bugfixed by: Brett Zamir (http://brett-zamir.me)
-  //  revised by: Jonas Raoni Soares Silva (http://www.jsfromhell.com)
-  //  revised by: Luke Smith (http://lucassmith.name)
-  //    input by: Kheang Hok Chin (http://www.distantia.ca/)
+  // bugfixed by: Brett Zamir (https://brett-zamir.me)
+  //  revised by: Jonas Raoni Soares Silva (https://www.jsfromhell.com)
+  //  revised by: Luke Smith (https://lucassmith.name)
+  //    input by: Kheang Hok Chin (https://www.distantia.ca/)
   //    input by: Jay Klehr
-  //    input by: Amir Habibi (http://www.residence-mixte.com/)
+  //    input by: Amir Habibi (https://www.residence-mixte.com/)
   //    input by: Amirouche
   //   example 1: number_format(1234.56)
   //   returns 1: '1,235'
@@ -50,18 +50,18 @@ module.exports = function number_format (number, decimals, decPoint, thousandsSe
   //  returns 14: '0.00000001'
 
   number = (number + '').replace(/[^0-9+\-Ee.]/g, '')
-  var n = !isFinite(+number) ? 0 : +number
-  var prec = !isFinite(+decimals) ? 0 : Math.abs(decimals)
-  var sep = (typeof thousandsSep === 'undefined') ? ',' : thousandsSep
-  var dec = (typeof decPoint === 'undefined') ? '.' : decPoint
-  var s = ''
+  const n = !isFinite(+number) ? 0 : +number
+  const prec = !isFinite(+decimals) ? 0 : Math.abs(decimals)
+  const sep = typeof thousandsSep === 'undefined' ? ',' : thousandsSep
+  const dec = typeof decPoint === 'undefined' ? '.' : decPoint
+  let s = ''
 
-  var toFixedFix = function (n, prec) {
+  const toFixedFix = function (n, prec) {
     if (('' + n).indexOf('e') === -1) {
       return +(Math.round(n + 'e+' + prec) + 'e-' + prec)
     } else {
-      var arr = ('' + n).split('e')
-      var sig = ''
+      const arr = ('' + n).split('e')
+      let sig = ''
       if (+arr[1] + prec > 0) {
         sig = '+'
       }

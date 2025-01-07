@@ -1,14 +1,14 @@
-module.exports = function is_array (mixedVar) { // eslint-disable-line camelcase
-  //  discuss at: http://locutus.io/php/is_array/
-  // original by: Kevin van Zonneveld (http://kvz.io)
+module.exports = function is_array(mixedVar) {
+  //  discuss at: https://locutus.io/php/is_array/
+  // original by: Kevin van Zonneveld (https://kvz.io)
   // improved by: Legaev Andrey
   // improved by: Onno Marsman (https://twitter.com/onnomarsman)
-  // improved by: Brett Zamir (http://brett-zamir.me)
+  // improved by: Brett Zamir (https://brett-zamir.me)
   // improved by: Nathan Sepulveda
-  // improved by: Brett Zamir (http://brett-zamir.me)
+  // improved by: Brett Zamir (https://brett-zamir.me)
   // bugfixed by: Cord
   // bugfixed by: Manish
-  // bugfixed by: Brett Zamir (http://brett-zamir.me)
+  // bugfixed by: Brett Zamir (https://brett-zamir.me)
   //      note 1: In Locutus, javascript objects are like php associative arrays,
   //      note 1: thus JavaScript objects will also
   //      note 1: return true in this function (except for objects which inherit properties,
@@ -28,14 +28,14 @@ module.exports = function is_array (mixedVar) { // eslint-disable-line camelcase
   //   example 5: is_array(function tmp_a (){ this.name = 'Kevin' })
   //   returns 5: false
 
-  var _getFuncName = function (fn) {
-    var name = (/\W*function\s+([\w$]+)\s*\(/).exec(fn)
+  const _getFuncName = function (fn) {
+    const name = /\W*function\s+([\w$]+)\s*\(/.exec(fn)
     if (!name) {
       return '(Anonymous)'
     }
     return name[1]
   }
-  var _isArray = function (mixedVar) {
+  const _isArray = function (mixedVar) {
     // return Object.prototype.toString.call(mixedVar) === '[object Array]';
     // The above works, but let's do the even more stringent approach:
     // (since Object.prototype.toString could be overridden)
@@ -43,7 +43,7 @@ module.exports = function is_array (mixedVar) { // eslint-disable-line camelcase
     if (!mixedVar || typeof mixedVar !== 'object' || typeof mixedVar.length !== 'number') {
       return false
     }
-    var len = mixedVar.length
+    const len = mixedVar.length
     mixedVar[mixedVar.length] = 'bogus'
     // The only way I can think of to get around this (or where there would be trouble)
     // would be to have an object defined
@@ -71,16 +71,17 @@ module.exports = function is_array (mixedVar) { // eslint-disable-line camelcase
     return false
   }
 
-  var isArray = _isArray(mixedVar)
+  const isArray = _isArray(mixedVar)
 
   if (isArray) {
     return true
   }
 
-  var iniVal = (typeof require !== 'undefined' ? require('../info/ini_get')('locutus.objectsAsArrays') : undefined) || 'on'
+  const iniVal =
+    (typeof require !== 'undefined' ? require('../info/ini_get')('locutus.objectsAsArrays') : undefined) || 'on'
   if (iniVal === 'on') {
-    var asString = Object.prototype.toString.call(mixedVar)
-    var asFunc = _getFuncName(mixedVar.constructor)
+    const asString = Object.prototype.toString.call(mixedVar)
+    const asFunc = _getFuncName(mixedVar.constructor)
 
     if (asString === '[object Object]' && asFunc === 'Object') {
       // Most likely a literal and intended as assoc. array

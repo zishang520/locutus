@@ -1,5 +1,5 @@
-module.exports = function bcadd (leftOperand, rightOperand, scale) {
-  //  discuss at: http://locutus.io/php/bcadd/
+module.exports = function bcadd(leftOperand, rightOperand, scale) {
+  //  discuss at: https://locutus.io/php/bcadd/
   // original by: lmeyrick (https://sourceforge.net/projects/bcmath-js/)
   //   example 1: bcadd('1', '2')
   //   returns 1: '3'
@@ -8,15 +8,15 @@ module.exports = function bcadd (leftOperand, rightOperand, scale) {
   //   example 3: bcadd('1928372132132819737213', '8728932001983192837219398127471', 2)
   //   returns 3: '8728932003911564969352217864684.00'
 
-  var bc = require('../_helpers/_bc')
-  var libbcmath = bc()
+  const bc = require('../_helpers/_bc')
+  const libbcmath = bc()
 
-  var first, second, result
+  let first, second, result
 
   if (typeof scale === 'undefined') {
     scale = libbcmath.scale
   }
-  scale = ((scale < 0) ? 0 : scale)
+  scale = scale < 0 ? 0 : scale
 
   // create objects
   first = libbcmath.bc_init_num()

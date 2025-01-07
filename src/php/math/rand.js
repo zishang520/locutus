@@ -1,5 +1,5 @@
-module.exports = function rand (min, max) {
-  //  discuss at: http://locutus.io/php/rand/
+module.exports = function rand(min, max) {
+  //  discuss at: https://locutus.io/php/rand/
   // original by: Leslie Hoare
   // bugfixed by: Onno Marsman (https://twitter.com/onnomarsman)
   //      note 1: See the commented out code below for a version which
@@ -8,7 +8,7 @@ module.exports = function rand (min, max) {
   //   example 1: rand(1, 1)
   //   returns 1: 1
 
-  var argc = arguments.length
+  const argc = arguments.length
   if (argc === 0) {
     min = 0
     max = 2147483647

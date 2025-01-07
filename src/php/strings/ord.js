@@ -1,21 +1,21 @@
-module.exports = function ord (string) {
-  //  discuss at: http://locutus.io/php/ord/
-  // original by: Kevin van Zonneveld (http://kvz.io)
+module.exports = function ord(string) {
+  //  discuss at: https://locutus.io/php/ord/
+  // original by: Kevin van Zonneveld (https://kvz.io)
   // bugfixed by: Onno Marsman (https://twitter.com/onnomarsman)
-  // improved by: Brett Zamir (http://brett-zamir.me)
+  // improved by: Brett Zamir (https://brett-zamir.me)
   //    input by: incidence
   //   example 1: ord('K')
   //   returns 1: 75
   //   example 2: ord('\uD800\uDC00'); // surrogate pair to create a single Unicode character
   //   returns 2: 65536
 
-  var str = string + ''
-  var code = str.charCodeAt(0)
+  const str = string + ''
+  const code = str.charCodeAt(0)
 
-  if (code >= 0xD800 && code <= 0xDBFF) {
+  if (code >= 0xd800 && code <= 0xdbff) {
     // High surrogate (could change last hex to 0xDB7F to treat
     // high private surrogates as single characters)
-    var hi = code
+    const hi = code
     if (str.length === 1) {
       // This is just a high surrogate with no following low surrogate,
       // so we return its value;
@@ -23,10 +23,10 @@ module.exports = function ord (string) {
       // we could also throw an error as it is not a complete character,
       // but someone may want to know
     }
-    var low = str.charCodeAt(1)
-    return ((hi - 0xD800) * 0x400) + (low - 0xDC00) + 0x10000
+    const low = str.charCodeAt(1)
+    return (hi - 0xd800) * 0x400 + (low - 0xdc00) + 0x10000
   }
-  if (code >= 0xDC00 && code <= 0xDFFF) {
+  if (code >= 0xdc00 && code <= 0xdfff) {
     // Low surrogate
     // This is just a low surrogate with no preceding high surrogate,
     // so we return its value;

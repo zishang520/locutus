@@ -1,7 +1,7 @@
-module.exports = function natsort (inputArr) {
-  //  discuss at: http://locutus.io/php/natsort/
-  // original by: Brett Zamir (http://brett-zamir.me)
-  // improved by: Brett Zamir (http://brett-zamir.me)
+module.exports = function natsort(inputArr) {
+  //  discuss at: https://locutus.io/php/natsort/
+  // original by: Brett Zamir (https://brett-zamir.me)
+  // improved by: Brett Zamir (https://brett-zamir.me)
   // improved by: Theriault (https://github.com/Theriault)
   //      note 1: This function deviates from PHP in returning a copy of the array instead
   //      note 1: of acting by reference and returning true; this was necessary because
@@ -17,15 +17,16 @@ module.exports = function natsort (inputArr) {
   //   example 1: var $result = $array1
   //   returns 1: {d: 'img1.png', c: 'img2.png', b: 'img10.png', a: 'img12.png'}
 
-  var strnatcmp = require('../strings/strnatcmp')
+  const strnatcmp = require('../strings/strnatcmp')
 
-  var valArr = []
-  var k
-  var i
-  var sortByReference = false
-  var populateArr = {}
+  const valArr = []
+  let k
+  let i
+  let sortByReference = false
+  let populateArr = {}
 
-  var iniVal = (typeof require !== 'undefined' ? require('../info/ini_get')('locutus.sortByReference') : undefined) || 'on'
+  const iniVal =
+    (typeof require !== 'undefined' ? require('../info/ini_get')('locutus.sortByReference') : undefined) || 'on'
   sortByReference = iniVal === 'on'
   populateArr = sortByReference ? inputArr : populateArr
 

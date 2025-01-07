@@ -1,4 +1,4 @@
-module.exports = function array_walk_recursive (array, funcname, userdata) { // eslint-disable-line camelcase
+module.exports = function array_walk_recursive(array, funcname, userdata) {
   // original by: Hugues Peccatte
   //      note 1: Only works with user-defined functions, not built-in functions like void()
   //   example 1: array_walk_recursive([3, 4], function () {}, 'userdata')
@@ -16,10 +16,10 @@ module.exports = function array_walk_recursive (array, funcname, userdata) { // 
     return false
   }
 
-  for (var key in array) {
+  for (const key in array) {
     // apply "funcname" recursively only on arrays
     if (Object.prototype.toString.call(array[key]) === '[object Array]') {
-      var funcArgs = [array[key], funcname]
+      const funcArgs = [array[key], funcname]
       if (arguments.length > 2) {
         funcArgs.push(userdata)
       }

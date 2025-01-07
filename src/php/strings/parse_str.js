@@ -1,18 +1,18 @@
-module.exports = function parse_str (str, array) { // eslint-disable-line camelcase
-  //       discuss at: http://locutus.io/php/parse_str/
+module.exports = function parse_str(str, array) {
+  //       discuss at: https://locutus.io/php/parse_str/
   //      original by: Cagri Ekin
-  //      improved by: Michael White (http://getsprink.com)
+  //      improved by: Michael White (https://getsprink.com)
   //      improved by: Jack
-  //      improved by: Brett Zamir (http://brett-zamir.me)
+  //      improved by: Brett Zamir (https://brett-zamir.me)
   //      bugfixed by: Onno Marsman (https://twitter.com/onnomarsman)
-  //      bugfixed by: Brett Zamir (http://brett-zamir.me)
+  //      bugfixed by: Brett Zamir (https://brett-zamir.me)
   //      bugfixed by: stag019
-  //      bugfixed by: Brett Zamir (http://brett-zamir.me)
-  //      bugfixed by: MIO_KODUKI (http://mio-koduki.blogspot.com/)
+  //      bugfixed by: Brett Zamir (https://brett-zamir.me)
+  //      bugfixed by: MIO_KODUKI (https://mio-koduki.blogspot.com/)
   // reimplemented by: stag019
   //         input by: Dreamer
-  //         input by: Zaide (http://zaidesthings.com/)
-  //         input by: David Pesta (http://davidpesta.com/)
+  //         input by: Zaide (https://zaidesthings.com/)
+  //         input by: David Pesta (https://davidpesta.com/)
   //         input by: jeicquest
   //      bugfixed by: Rafał Kukawski
   //           note 1: When no argument is specified, will put variables in global scope.
@@ -40,29 +40,29 @@ module.exports = function parse_str (str, array) { // eslint-disable-line camelc
   //        example 5: var $result = $arr
   //        returns 5: {"a":{"0":"2"}}
 
-  var strArr = String(str).replace(/^&/, '').replace(/&$/, '').split('&')
-  var sal = strArr.length
-  var i
-  var j
-  var ct
-  var p
-  var lastObj
-  var obj
-  var chr
-  var tmp
-  var key
-  var value
-  var postLeftBracketPos
-  var keys
-  var keysLen
+  const strArr = String(str).replace(/^&/, '').replace(/&$/, '').split('&')
+  const sal = strArr.length
+  let i
+  let j
+  let ct
+  let p
+  let lastObj
+  let obj
+  let chr
+  let tmp
+  let key
+  let value
+  let postLeftBracketPos
+  let keys
+  let keysLen
 
-  var _fixStr = function (str) {
+  const _fixStr = function (str) {
     return decodeURIComponent(str.replace(/\+/g, '%20'))
   }
 
-  var $global = (typeof window !== 'undefined' ? window : global)
+  const $global = typeof window !== 'undefined' ? window : global
   $global.$locutus = $global.$locutus || {}
-  var $locutus = $global.$locutus
+  const $locutus = $global.$locutus
   $locutus.php = $locutus.php || {}
 
   if (!array) {
@@ -72,7 +72,11 @@ module.exports = function parse_str (str, array) { // eslint-disable-line camelc
   for (i = 0; i < sal; i++) {
     tmp = strArr[i].split('=')
     key = _fixStr(tmp[0])
-    value = (tmp.length < 2) ? '' : _fixStr(tmp[1])
+    value = tmp.length < 2 ? '' : _fixStr(tmp[1])
+
+    if (key.includes('__proto__') || key.includes('constructor') || key.includes('prototype')) {
+      break
+    }
 
     while (key.charAt(0) === ' ') {
       key = key.slice(1)

@@ -1,19 +1,19 @@
-module.exports = function mktime () {
-  //  discuss at: http://locutus.io/php/mktime/
-  // original by: Kevin van Zonneveld (http://kvz.io)
+module.exports = function mktime() {
+  //  discuss at: https://locutus.io/php/mktime/
+  // original by: Kevin van Zonneveld (https://kvz.io)
   // improved by: baris ozdil
-  // improved by: Kevin van Zonneveld (http://kvz.io)
+  // improved by: Kevin van Zonneveld (https://kvz.io)
   // improved by: FGFEmperor
-  // improved by: Brett Zamir (http://brett-zamir.me)
+  // improved by: Brett Zamir (https://brett-zamir.me)
   //    input by: gabriel paderni
   //    input by: Yannoo
   //    input by: jakes
   //    input by: 3D-GRAF
   //    input by: Chris
-  // bugfixed by: Kevin van Zonneveld (http://kvz.io)
-  // bugfixed by: Kevin van Zonneveld (http://kvz.io)
+  // bugfixed by: Kevin van Zonneveld (https://kvz.io)
+  // bugfixed by: Kevin van Zonneveld (https://kvz.io)
   // bugfixed by: Marc Palau
-  // bugfixed by: Brett Zamir (http://brett-zamir.me)
+  // bugfixed by: Brett Zamir (https://brett-zamir.me)
   //  revised by: Theriault (https://github.com/Theriault)
   //      note 1: The return values of the following examples are
   //      note 1: received only if your system's timezone is UTC.
@@ -38,16 +38,16 @@ module.exports = function mktime () {
   //   example 8: mktime(0, 0, -1, 1, 1, 1970)
   //   returns 8: -1
 
-  var d = new Date()
-  var r = arguments
-  var i = 0
-  var e = ['Hours', 'Minutes', 'Seconds', 'Month', 'Date', 'FullYear']
+  const d = new Date()
+  const r = arguments
+  let i = 0
+  const e = ['Hours', 'Minutes', 'Seconds', 'Month', 'Date', 'FullYear']
 
   for (i = 0; i < e.length; i++) {
     if (typeof r[i] === 'undefined') {
       r[i] = d['get' + e[i]]()
       // +1 to fix JS months.
-      r[i] += (i === 3)
+      r[i] += i === 3
     } else {
       r[i] = parseInt(r[i], 10)
       if (isNaN(r[i])) {
@@ -57,7 +57,7 @@ module.exports = function mktime () {
   }
 
   // Map years 0-69 to 2000-2069 and years 70-100 to 1970-2000.
-  r[5] += (r[5] >= 0 ? (r[5] <= 69 ? 2e3 : (r[5] <= 100 ? 1900 : 0)) : 0)
+  r[5] += r[5] >= 0 ? (r[5] <= 69 ? 2e3 : r[5] <= 100 ? 1900 : 0) : 0
 
   // Set year, month (-1 to fix JS months), and date.
   // !This must come before the call to setHours!
@@ -66,9 +66,9 @@ module.exports = function mktime () {
   // Set hours, minutes, and seconds.
   d.setHours(r[0], r[1], r[2])
 
-  var time = d.getTime()
+  const time = d.getTime()
 
   // Divide milliseconds by 1000 to return seconds and drop decimal.
   // Add 1 second if negative or it'll be off from PHP by 1 second.
-  return (time / 1e3 >> 0) - (time < 0)
+  return ((time / 1e3) >> 0) - (time < 0)
 }
